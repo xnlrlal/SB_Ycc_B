@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youngtvjobs.ycc.course.courseMapper">
+
+	<sql id="selectFromCourse">
+		SELECT course_id, course_nm, course_image, course_reg_start_date,
+		course_reg_end_date, course_start_date, course_end_date, course_day,
+		course_time, course_target, course_cost, course_info, user_id,
+		croom_id
+		FROM public.tb_course
+	</sql>
+	
+	//강좌 목록 보여주기
+	<select id="selectCourselist">
+		SELECT course_id, course_nm, course_reg_start_date,
+		course_reg_end_date,
+		course_day, course_time, course_cost
+		FROM public.tb_course
+	</select>
+
+
+
+</mapper>
+  	
