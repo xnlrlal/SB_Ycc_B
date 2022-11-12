@@ -24,7 +24,7 @@
 		<h6>| 강좌상세정보</h6>
 		<div class="row g-0">
 			<div class="col-md-6">
-				<div class="table table-bordered h-100 text-wrap">
+				<div class="table table-bordered h-100">
 					<table class="table h-100">
 						<tbody>
 						<colgroup><col width="25%"></colgroup>
