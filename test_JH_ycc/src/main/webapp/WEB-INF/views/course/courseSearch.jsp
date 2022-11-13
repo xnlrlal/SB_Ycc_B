@@ -163,7 +163,29 @@
         <option value="2">평점순</option>
       </select>
 
-      <table class="table">
+	<table>
+		<thead class="table-light">
+			<tr>
+				<th scope="col">강좌명</th>
+				<th scope="col">요일</th>
+				<th scope="col">시간</th>
+				<th scope="col">강사명</th>
+				<th scope="col">수강료</th>
+				<th scope="col">상태</th>
+			</tr>
+		</thead>
+	
+		<tbody class="table-group-divider">
+			<c:forEach var="boardDto" items="&{list }">
+				<td class="title">${boardDto.course_nm }</td>
+				<td class="day">${boardDto.course_day }</td>
+				<td class="time">${boardDto.course_time }</td>
+				<td class="teachar">공란</td>
+				<td class="pay">$boardDto.couse_cost }</td>
+			</c:forEach>
+		</tbody>
+	</table>
+	<!-- <table class="table">
         <thead class="table-light">
           <tr>
             <th scope="col">강좌명</th>
@@ -257,7 +279,7 @@
             <td><span class="badge text-bg-primary">접수가능</span></td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
 
       <nav aria-label="Page navigation example" class="my-5">
         <ul class="pagination justify-content-center">
