@@ -53,6 +53,8 @@ public class LoginController
 	{
 		// TODO Auto-generated method stub
 		MemberDto user = memberDao.loginSelect(id);
+		System.out.println(user.getUser_id());
+		System.out.println(id);
 		System.out.println(user.getUser_pw());
 		System.out.println(pw);
 		if(user == null) 
