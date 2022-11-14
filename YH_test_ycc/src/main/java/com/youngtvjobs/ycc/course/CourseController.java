@@ -15,14 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CourseController {
 	
 	@Autowired
-	CourseDao courseDao;
+	CourseService courseService;
 
 	@GetMapping("/course/search")
-	public String courseSearch(Model m) {
+	public String courseSearch(SearchItem sc, Model m) {
 		
 		try {
-			List<CourseDto> list = courseDao.selectCourselist();
+			
+			int totalCnt = courseService.getSearchResultCnt(sc);
+			m.addAttribute("totalCnt", totalCnt);
+			
+			PageResolver pageResolver = new PageResolver(totalCnt, sc);
+
+			List<CourseDto> list = courseService.getSearchResultPage(sc);
 			m.addAttribute("list", list);
+			m.addAttribute("pr", pageResolver);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

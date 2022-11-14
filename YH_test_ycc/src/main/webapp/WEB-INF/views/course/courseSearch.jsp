@@ -23,6 +23,35 @@
 	</script>
 
 <title>YOUNG문화체육센터</title>
+<style type="text/css">
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.paging {
+	color: black;
+	width: 100%;
+	align-items: center;
+	text-align: center;
+}
+
+.page {
+	color: black;
+	padding: 6px;
+	margin-right: 10px;
+}
+
+.paging-container {
+	width: 100%;
+	height: 70px;
+	display: flex;
+	margin-top: 50px;
+	margin: auto;
+}
+</style>
 </head>
 
 <body>
@@ -192,8 +221,27 @@
          
         </tbody>
       </table>
+      <br>
+			<div class="paging-container">
+				<div class="paging">
+					<c:if test="${totalCnt == null || totalCnt == 0 }">
+						<div> 게시물이 없습니다.</div>
+					</c:if>
+					<c:if test="${totalCnt != null || totalCnt != 0 }">
+						<c:if test="${pr.showPrev }">
+							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(pr.beginPage-1) }" />"> &lt; </a>
+						</c:if>
+						<c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }">
+							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(i)}" />">${i }</a>
+						</c:forEach>
+						<c:if test="${pr.showNext }">
+							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(pr.endPage+1) }" />"> &gt; </a>
+						</c:if>						
+					</c:if>
+				</div>
+		</div>
 
-      <nav aria-label="Page navigation example" class="my-5">
+      <!-- <nav aria-label="Page navigation example" class="my-5">
         <ul class="pagination justify-content-center">
           <li class="page-item">
             <a class="page-link" href="index.html" aria-label="Previous">
@@ -211,7 +259,7 @@
             </a>
           </li>
         </ul>
-      </nav>
+      </nav> -->
 
 
     </div>

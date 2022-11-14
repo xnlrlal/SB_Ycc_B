@@ -5,23 +5,30 @@
   
   <mapper namespace="com.youngtvjobs.ycc.course.CourseMapper">
  
-	<sql id="selectFromCourse">
+<!-- 	<sql id="selectFromCourse">
 		SELECT course_id, course_nm, course_image, course_reg_start_date,
 		course_reg_end_date, course_start_date, course_end_date, course_day,
 		course_time, course_target, course_cost, course_info, user_id,
 		croom_id
-	</sql>
+	</sql> -->
 
-	<!-- 강좌 목록 보여주기 -->
-	<select id="selectCourselist" resultType="CourseDto"> 
-		SELECT 
-		course_id, course_nm, course_reg_start_date,
-		course_reg_end_date,
-		course_day, course_time, course_cost, user_name
-		FROM public.tb_course
-		join tb_user
-		on public.tb_course.user_id = tb_user.user_id
-	</select>	
+		
+		<!-- 강좌 목록 보여주기 -->
+		<sql id="selectFromCourse"> 
+			SELECT 
+			course_id, course_nm, course_reg_start_date,
+			course_reg_end_date,
+			course_day, course_time, course_cost, user_name
+			FROM public.tb_course
+			join tb_user
+			on public.tb_course.user_id = tb_user.user_id
+		</sql>
+		
+		<select id="selectCourselist" parameterType="SearchItem" resultType="CourseDto">
+		<include refid="selectFromCourse" />
+			order by course_id
+			limit #{pageSize} offset #{offset}		
+		</select>
   
   
   	<!-- 테스트용 데이터 -->
@@ -29,8 +36,11 @@
   		INSERT INTO public.tb_course
 		(course_id, course_nm, course_image, course_reg_start_date, course_reg_end_date, course_start_date, course_end_date, course_day, course_time, course_target, course_cost, course_info, user_id, croom_id)
 		VALUES(#{course_id}, #{course_nm}, #{course_image}, #{course_reg_start_date}, #{course_reg_end_date}, #{course_start_date}, #{course_end_date}, #{course_day}, #{course_time}, #{course_target}, #{course_cost}, #{course_info}, #{user_id}, #{croom_id});
-
   	</insert>
+  	
+  	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+		select count(*) from tb_course;
+    </select>
 	
   </mapper>
   

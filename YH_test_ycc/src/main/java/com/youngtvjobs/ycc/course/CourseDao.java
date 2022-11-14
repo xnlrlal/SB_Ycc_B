@@ -1,11 +1,11 @@
 package com.youngtvjobs.ycc.course;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CourseDao {
 
-//	List<CourseDto> selectCourselist(CourseDto courseDto) throws Exception;
-//	CourseDto selectCourselist() throws Exception;
-	List<CourseDto> selectCourselist() throws Exception;
-	int insert(CourseDto courseDto);
+	List<CourseDto> selectCourselist(SearchItem sc) throws Exception;
+	int insert(CourseDto courseDto) throws Exception;
+	int searchResultCnt(SearchItem sc) throws Exception;
 }
