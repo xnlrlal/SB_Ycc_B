@@ -1,23 +1,25 @@
 
 
+import static org.junit.Assert.assertTrue;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import org.junit.Test;
+import com.youngtvjobs.ycc.course.CourseDao;
+import com.youngtvjobs.ycc.course.CourseDto;
 
-import static org.junit.Assert.assertTrue;
-
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
 public class DBConnectionTestT1
 {	
 	//데이터베이스 커넥션 테스트
@@ -33,5 +35,19 @@ public class DBConnectionTestT1
 
 		// 괄호안의 조건식이 true면 테스트 성공, 아니면 실패
 		assertTrue(conn != null);
+	}
+	
+	@Autowired 
+	private CourseDao courseDao;
+	
+	@Test
+	public void selectTest() throws Exception{
+		assertTrue(courseDao != null);
+		System.out.println("courseDao = " + courseDao);
+		
+		CourseDto courseDto = courseDao.select(1);
+		System.out.println("courseDto = " + courseDto);
+		assertTrue(courseDto.getCourse_id() == 0);
+
 	}
 }

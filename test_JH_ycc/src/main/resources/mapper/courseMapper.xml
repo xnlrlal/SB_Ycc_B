@@ -14,7 +14,7 @@
 	</sql>
 	
 	<!-- 강좌 목록 보여주기 -->
-	<select id="selectCourselist">
+	<select id="selectCourselist" parameterType="int" resultType="CourseDto">
 		SELECT course_id, course_nm, course_reg_start_date,
 		course_reg_end_date,
 		course_day, course_time, course_cost
