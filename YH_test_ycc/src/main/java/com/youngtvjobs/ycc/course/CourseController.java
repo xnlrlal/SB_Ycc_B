@@ -21,7 +21,6 @@ public class CourseController {
 	public String courseSearch(SearchItem sc, Model m) {
 		
 		try {
-			
 			int totalCnt = courseService.getSearchResultCnt(sc);
 			m.addAttribute("totalCnt", totalCnt);
 			
@@ -30,6 +29,14 @@ public class CourseController {
 			List<CourseDto> list = courseService.getSearchResultPage(sc);
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
+			
+			
+//				if(boardService.write(boardDto) != 1)
+//					throw new Exception("Write failed");
+//				
+//				rattr.addFlashAttribute("msg", "WRT_OK");
+//				return "redirect:/board/list";
+
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

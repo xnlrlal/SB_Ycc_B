@@ -23,7 +23,7 @@ public class CourseDaoImplTest {
 	@Test
 	public void insertTest() throws Exception{
 		
-		for(int i=101; i<=151; i++) {
+		for(int i=1; i<=151; i++) {
 			CourseDto courseDto = new CourseDto(i, "수영 기초반"+i, "", new Date(), new Date(), new Date(), new Date(), "월, 수, 금", "07:00 ~ 7:50", "성인", 89000, "수영 기초반 강좌입니다.", "jiho", "1", "김지호");
 			courseDao.insert(courseDto);
 		}

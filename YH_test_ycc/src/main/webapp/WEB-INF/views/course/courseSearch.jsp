@@ -124,8 +124,9 @@ a {
         <div class="introduction">
           <h3 class="py-4">개설 강좌</h3>
 
-          <form>
+          
           <div class="intro">
+          	<form action="<c:url value="/course/search" />" method="get">
             <div class="col-2"></div>
             <div class="pro_box container">
               <div class="row ms-5 pt-2">
@@ -133,8 +134,8 @@ a {
                   <div class="row">
                     <label for="sidebar-position2" class="col-4 col-form-label">분류</label>
                     <div class="col-8">
-                      <select class="form-select form-select-sm col-6 mt-1" aria-label=".form-select-sm example">
-                        <option selected>전체</option>
+                      <select class="form-select form-select-sm col-6 mt-1" aria-label=".form-select-sm example" name="option">
+                        <option value="A" ${pr.sc.option=='A' || pr.sc.option=='' ? "selected" : ""} >전체</option>
                         <option value="1">수영</option>
                         <option value="2">베이킹</option>
                       </select>
@@ -170,16 +171,14 @@ a {
                 <div class="col-3">
                   <button type="reset" class="btn btn-danger btn-sm mt-1">초기화</button>
                 </div>
-              </form>
-
-              </div>
-              <div role="search" class="row mx-5 py-2">
+                <div role="search" class="row mx-5 py-2">
                 <div class="col-10">
-                  <input class="form-control form-control-sm me-2" type="search" placeholder="검색" aria-label="Search">
+                  <input class="form-control form-control-sm me-2" type="text" name="keyword" value="${param.keyword }"  placeholder="검색어를 입력해주세요" aria-label="Search">
                 </div>
                 <div class="col-2">
-                  <button class="btn btn-primary btn-sm" type="submit">검색</button>
+                  <input type="submit" class="btn btn-primary btn-sm" value="검색" >
                 </div>
+              </form>
               </div>
             </div>
           </div>
@@ -231,10 +230,14 @@ a {
 						<c:if test="${pr.showPrev }">
 							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(pr.beginPage-1) }" />"> &lt; </a>
 						</c:if>
+					<%-- 	<c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }">
+							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(i)}" />">${ totalCnt == null || totalCnt == 0 ? "" : i }</a>
+						</c:forEach> --%>
 						<c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }">
-							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(i)}" />">${i }</a>
+							<a class="page"
+								href="<c:url value="/course/search${pr.sc.getQueryString(i)}" />">${i }</a>
 						</c:forEach>
-						<c:if test="${pr.showNext }">
+				<c:if test="${pr.showNext }">
 							<a class="page" href="<c:url value="/course/search${pr.sc.getQueryString(pr.endPage+1) }" />"> &gt; </a>
 						</c:if>						
 					</c:if>
