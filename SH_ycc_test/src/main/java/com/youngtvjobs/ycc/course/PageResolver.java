@@ -14,8 +14,16 @@ public class PageResolver {
 	private boolean showNext = false;
 	private boolean showPrev = false;
 	
-	public PageResolver(int totalPage, SearchItem sc) {
-		this.totalPage = totalPage;
+	public PageResolver(int totalCnt, Integer page) {
+		this(totalCnt, new SearchItem(page, 10));
+	}
+
+	public PageResolver(int totalCnt, Integer page, Integer pageSize) {
+		this(totalCnt, new SearchItem(page, pageSize));
+	}
+	
+	public PageResolver(int totalCnt, SearchItem sc) {
+		this.totalCnt = totalCnt;
 		this.sc = sc;
 		
 		doPaging(totalCnt, sc);
@@ -30,15 +38,15 @@ public class PageResolver {
 		this.showNext = endPage != totalPage;
 	}
 	
-	public void print() {
-		System.out.println("page = " + sc.getPage());
-		System.out.println(showPrev ? "PREV " : "");
-		
-		for (int i=beginPage; i<=endPage; i++)
-			System.out.println(i + " ");
-		
-		System.out.println(showNext ? " NEXT" : "");
-	}
+//	public void print() {
+//		System.out.println("page = " + sc.getPage());
+//		System.out.println(showPrev ? "PREV " : "");
+//		
+//		for (int i=beginPage; i<=endPage; i++)
+//			System.out.println(i + " ");
+//		
+//		System.out.println(showNext ? " NEXT" : "");
+//	}
 
 	@Override
 	public String toString() {

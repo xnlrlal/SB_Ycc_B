@@ -42,6 +42,7 @@ public class CourseController {
 		if(!logincheck(request)) 
 			return "redirect:/login?toURL="+request.getRequestURL();
 		try {
+			
 			int totalCnt = courseService.getsearchResultCnt(sc);
 			m.addAttribute("totalCnt", totalCnt);
 			
@@ -50,6 +51,9 @@ public class CourseController {
 			List<CourseDto> list = courseService.getsearchResultPage(sc);
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
+			System.out.println(list.get(0).toString());
+			System.out.println(sc.toString());
+			System.out.println(sc.getQueryString());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
