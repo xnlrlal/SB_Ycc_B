@@ -40,6 +40,7 @@ public class CourseDto {
 	public CourseDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,

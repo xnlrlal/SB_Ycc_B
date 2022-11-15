@@ -8,7 +8,7 @@ public class SearchItem {
 	public static final int DEFAULT_PAGE_SIZE = 10;
 	public static final int MIN_PAGE_SIZE = 5;
 	public static final int MAX_PAGE_SIZE = 50;
-	
+
 	private Integer page = 1;
 	private Integer pageSize = DEFAULT_PAGE_SIZE;
 	private String option = "";
@@ -18,7 +18,7 @@ public class SearchItem {
 	public SearchItem() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public SearchItem(Integer page, Integer pageSize) {
 		this(page, pageSize, "", "");
 	}
@@ -34,9 +34,9 @@ public class SearchItem {
 	public String getQueryString() {
 		return getQueryString(page);
 	}
-
-	private String getQueryString(Integer page) {
-		// TODO Auto-generated method stub
+	
+	// ?page=10&pageSize=10&option=A&keyword=title
+	public String getQueryString(Integer page) {
 		return UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
 				.queryParam("pageSize", pageSize)
@@ -59,6 +59,8 @@ public class SearchItem {
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = requireNonNullElse(pageSize, DEFAULT_PAGE_SIZE);
+		
+		// MIN_PAGE_SIZE <= pageSize <= MAX_PAGE_SIZE
 		this.pageSize = max(MIN_PAGE_SIZE, min(this.pageSize, MAX_PAGE_SIZE));
 	}
 
@@ -79,11 +81,10 @@ public class SearchItem {
 	}
 
 	public Integer getOffset() {
-		return offset;
-	}
-
-	public void setOffset(Integer offset) {
-		this.offset = offset;
+		int result = (page-1)*pageSize;
+		if(result < 0) result = 0;
+		
+		return result;
 	}
 
 	@Override
@@ -91,5 +92,4 @@ public class SearchItem {
 		return "SearchItem [page=" + page + ", pageSize=" + pageSize + ", option=" + option + ", keyword=" + keyword
 				+ ", offset=" + offset + "]";
 	}
-	
 }

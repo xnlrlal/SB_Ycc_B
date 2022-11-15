@@ -11,8 +11,14 @@
 	
 	<!-- 강좌 목록 보여주기 -->
 	<select id="selectCourselist">
-		SELECT course_id, course_nm, course_reg_start_date, course_reg_end_date, course_day, course_time, course_cost, course_reg_end_date
+		SELECT course_id, course_nm, course_reg_start_date, course_reg_end_date, course_day, course_time, course_cost, course_reg_stat
 		FROM tb_course
+	</select>
+	
+	<select id="selectPage" parameterType="map" resultType="CourseDto">
+		<include refid="selectFromCourse" />
+		order by course_reg_stat , course_reg_start_date desc
+		limit #{pageSize} offset #{offset}
 	</select>
 	
 	<!-- 검색된 강좌의수 -->
@@ -31,6 +37,18 @@
 		order by course_reg_stat desc, course_reg_start_date, course_reg_end_date desc
 		limit #{pageSize} offset #{offset}
 	</select> 
+	
+	<delete id="deleteAll">
+		delete from tb_course
+	</delete>
+	
+	<insert id="insert" parameterType="CourseDto">
+		INSERT INTO public.tb_course
+		(course_id, course_nm, course_image, course_reg_start_date, course_reg_end_date, course_start_date
+		, course_end_date, course_day, course_time, course_target, course_cost, course_info, user_id, croom_id, course_reg_stat)
+		VALUES(#{course_id}, #{course_nm}, #{course_image}, #{course_reg_start_date}, #{course_reg_end_date}, #{course_start_date}
+		, #{course_end_date}, #{course_day}, #{course_time}, #{course_target}, #{course_cost}, #{course_info}, #{user_id}, #{croom_id}, #{course_reg_stat})
+	</insert>
 
 </mapper>
   	
