@@ -11,10 +11,13 @@
 	
 	<sql id="searchCondition">
 		<choose>
-			<when test='option=="T"'>
+			<when test='option=="S"'>
 				AND course_nm LIKE concat('%', #{keyword}, '%')
 			</when>
-			<when test='option=="W"'>
+			<when test='option=="C"'>
+				AND writer LIKE concat('%', #{keyword}, '%')
+			</when>
+			<when test='option=="E"'>
 				AND writer LIKE concat('%', #{keyword}, '%')
 			</when>
 			<otherwise>

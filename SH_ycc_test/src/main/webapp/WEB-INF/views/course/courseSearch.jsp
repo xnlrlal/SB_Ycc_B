@@ -11,7 +11,7 @@
   <style type="text/css">
   	.searchBox { background-color: #f1f1f1; }
   	.tdeco-none { text-decoration: none; color: black; }
-  	/* .table>:not(caption)>*>* { padding: 1rem 1rem; } */
+  	.
   </style>
 	
 	<title>YOUNG문화체육센터</title>
