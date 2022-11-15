@@ -7,8 +7,12 @@
 <head>
 	<!-- head & meta tag include -->
 	<%@include file="/WEB-INF/views/metahead.jsp"%>
-	<!-- 커스텀 스타일 (재정의) -->
-  <link rel="stylesheet" href="<c:url value='/resources/css/courseSearch.css' />">
+  
+  <style type="text/css">
+  	.searchBox { background-color: #f1f1f1; }
+  	.tdeco-none { text-decoration: none; color: black; }
+  	/* .table>:not(caption)>*>* { padding: 1rem 1rem; } */
+  </style>
 	
 	<title>YOUNG문화체육센터</title>
 </head>
@@ -18,95 +22,92 @@
 
 	<!-- 본문 -->
 	<div class="container mt-5">
-		<div class="contents" id="container">
-			<div class="introduction">
-				<h2>수강신청</h2>
-				<hr>
-				<form>
-					<div class="intro">
-						<div class="pro_box container">
-							<div class="row pt-2">
-								<div class="col-3">
-									<div class="row">
-										<label for="sidebar-position2" class="col-4 col-form-label">분류</label>
-										<div class="col-8">
-											<select class="form-select form-select-sm col-6 mt-1" aria-label=".form-select-sm example">
-												<option selected>전체</option>
-												<option value="1">수영</option>
-												<option value="2">베이킹</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="row">
-										<label for="sidebar-position2" class="col-4 col-form-label">수강대상</label>
-										<div class="col-8">
-											<select class="form-select form-select-sm mt-1" aria-label=".form-select-sm example">
-												<option selected>전체</option>
-												<option value="1">성인</option>
-												<option value="2">학생</option>
-												<option value="3">영유아</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="row">
-										<label for="sidebar-position3" class="col-4 col-form-label">접수상태</label>
-										<div class="col-8">
-											<select class="form-select form-select-sm mt-1" aria-label=".form-select-sm example">
-												<option selected>전체</option>
-												<option value="1">접수가능</option>
-												<option value="2">오픈예정</option>
-												<option value="3">접수마감</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="col-3">
-									<button type="reset" class="btn btn-danger btn-sm mt-1">초기화</button>
-								</div>
-							</div>
-							<div role="search" class="row py-2">
-								<div class="col-10">
-									<input class="form-control form-control-sm me-2" type="search" placeholder="검색" aria-label="Search">
-								</div>
-								<div class="col-2">
-									<button class="btn btn-primary btn-sm" type="submit">검색</button>
-								</div>
+		<h2>수강신청</h2>
+		<hr>
+		<form action="<c:url value="/course/search" />" method="get">
+			<div class="searchBox p-3">
+				<div class="row gap-1 mb-2">
+					<div class="col-md-3">
+						<div class="row">
+							<label for="sidebar-position2" class="col-4 align-self-center">분류</label>
+							<div class="col-8">
+								<select class="form-select" aria-label=".form-select-sm example" name="option">
+									<option value="A" ${pr.sc.option=='A' || pr.sc.option=='' ? "selected" : ""}>전체</option>
+									<option value="S" ${pr.sc.option=='S' ? "selected" : ""}>스포츠</option>
+									<option value="C" ${pr.sc.option=='C' ? "selected" : ""}>문화</option>
+									<option value="E" ${pr.sc.option=='E' ? "selected" : ""}>교육</option>
+								</select>
 							</div>
 						</div>
 					</div>
-				</form>
+					<div class="col-md-3">
+						<div class="row">
+							<label for="sidebar-position2" class="col-4 align-self-center">수강대상</label>
+							<div class="col-8">
+								<select class="form-select"	aria-label=".form-select example">
+									<option selected>전체</option>
+									<option value="1">성인</option>
+									<option value="2">학생</option>
+									<option value="3">영유아</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="row">
+							<label for="sidebar-position3" class="col-4 align-self-center">접수상태</label>
+							<div class="col-8">
+								<select class="form-select"	aria-label=".form-select example">
+									<option selected>전체</option>
+									<option value="1">접수가능</option>
+									<option value="2">오픈예정</option>
+									<option value="3">접수마감</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 d-grid d-md-block">
+						<button type="reset" class="btn btn-danger">초기화</button>
+					</div>
+				</div>
+				<div role="search" class="row gap-1">
+					<div class="col-md-9">
+						<input class="form-control" type="text" name="keyword" value="${param.keyword }" placeholder="검색어를 입력해주세요" aria-label="Search">
+					</div>
+					<div class="col-md-2 d-grid d-md-block">
+						<input type="submit" class="btn btn-primary" value="검색">
+					</div>
+				</div>
 			</div>
-		</div>
-		
-		<select class="form-select form-select-sm my-3 float-end" aria-label=".form-select-sm example" style="width: 100px;">
-			<option selected>최신순</option>
-			<option value="1">강좌명순</option>
-			<option value="2">평점순</option>
+		</form>
+
+		<select class="form-select form-select my-3 float-end" aria-label=".form-select-sm example" style="width: 100px;">
+			<option value="N" selected>최신순</option>
+			<option value="C">강좌명순</option>
+			<option value="S">평점순</option>
 		</select>
 
-		<table class="table">
-			<thead class="table-light">
+		<table class="table text-center">
+			<thead class="table-light align-middle">
 				<tr>
 					<th>강좌명</th>
-					<th>요일</th>
-					<th>시간</th>
+					<th>수강기간</th>
+					<th>수강시간</th>
 					<th>강사명</th>
 					<th>수강료</th>
+					<th>접수기간</th>
 					<th>상태</th>
 				</tr>
 			</thead>
-			<tbody class="table-group-divider">
+			<tbody class="table-group-divider align-middle">
 				<c:forEach var="courseDto" items="${list }">
 					<tr>
-						<td><a href="<c:url value="/course/detail${pr.sc.queryString }&course_id=${courseDto.course_id }" />">${courseDto.course_nm }</a></td>
-						<td>${courseDto.course_day }</td>
-						<td>${courseDto.course_time }</td>
+						<td><a class="tdeco-none" href="<c:url value="/course/detail${pr.sc.queryString }&course_id=${courseDto.course_id }" />">${courseDto.course_nm }</a></td>
+						<td>${courseDto.course_sd() }<br>~${courseDto.course_ed() }</td>
+						<td>${courseDto.course_day }<br>${courseDto.course_time }</td>
 						<td>${courseDto.user_id }</td>
 						<td>${courseDto.course_cost }</td>
+						<td>${courseDto.reg_sd() }<br>~${courseDto.reg_ed() }</td>
 						<td>${courseDto.course_reg_stat }</td>
 					</tr>
 				</c:forEach>

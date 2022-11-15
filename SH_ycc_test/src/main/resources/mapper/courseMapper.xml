@@ -9,6 +9,21 @@
 		SELECT * FROM tb_course
 	</sql>
 	
+	<sql id="searchCondition">
+		<choose>
+			<when test='option=="T"'>
+				AND course_nm LIKE concat('%', #{keyword}, '%')
+			</when>
+			<when test='option=="W"'>
+				AND writer LIKE concat('%', #{keyword}, '%')
+			</when>
+			<otherwise>
+				AND (course_nm LIKE concat('%', #{keyword}, '%')
+				OR user_id LIKE concat('%', #{keyword}, '%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
 	<!-- 강좌 목록 보여주기 -->
 	<select id="selectCourselist">
 		SELECT course_id, course_nm, course_reg_start_date, course_reg_end_date, course_day, course_time, course_cost, course_reg_stat
@@ -26,14 +41,14 @@
 		select count(*)
 		from tb_course 
 		where true 
-		and course_nm like concat('%', #{keyword}, '%') 
+		<include refid="searchCondition" />
 	</select> 
 
 	<!-- 검색된 강좌 리스트 -->
 	<select id="searchSelectPage" parameterType="SearchItem" resultType="CourseDto">
 		<include refid="selectFromCourse" />
 		where true 
-		and course_nm like concat('%', #{keyword}, '%')
+		<include refid="searchCondition" />
 		order by course_reg_stat desc, course_reg_start_date, course_reg_end_date desc
 		limit #{pageSize} offset #{offset}
 	</select> 

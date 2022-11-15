@@ -1,5 +1,7 @@
 package com.youngtvjobs.ycc.course;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,13 +36,36 @@ public class CourseDto {
 	private int course_cost;
 	private String course_info;
 	private String user_id;
+	private String user_name;
 	private String croom_id;
 	private String course_reg_stat;
 	
 	public CourseDto() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
+			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
+			String course_time, String course_target, int course_cost, String course_info, String user_id,
+			String user_name, String croom_id, String course_reg_stat) {
+		super();
+		this.course_id = course_id;
+		this.course_nm = course_nm;
+		this.course_image = course_image;
+		this.course_reg_start_date = course_reg_start_date;
+		this.course_reg_end_date = course_reg_end_date;
+		this.course_start_date = course_start_date;
+		this.course_end_date = course_end_date;
+		this.course_day = course_day;
+		this.course_time = course_time;
+		this.course_target = course_target;
+		this.course_cost = course_cost;
+		this.course_info = course_info;
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.croom_id = croom_id;
+		this.course_reg_stat = course_reg_stat;
+	}
 
 	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
@@ -67,11 +92,10 @@ public class CourseDto {
 	@Override
 	public int hashCode() {
 		return Objects.hash(course_cost, course_day, course_end_date, course_id, course_image, course_info, course_nm,
-				course_reg_end_date, course_reg_start_date, course_start_date, course_target, course_time, croom_id,
-				user_id, course_reg_stat);
+				course_reg_end_date, course_reg_start_date, course_reg_stat, course_start_date, course_target,
+				course_time, croom_id, user_id, user_name);
 	}
 
-	// 추후 필요없는 요소 제거할것
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,11 +108,14 @@ public class CourseDto {
 		return course_cost == other.course_cost && Objects.equals(course_day, other.course_day)
 				&& Objects.equals(course_end_date, other.course_end_date) && course_id == other.course_id
 				&& Objects.equals(course_image, other.course_image) && Objects.equals(course_info, other.course_info)
-				&& Objects.equals(course_nm, other.course_nm)&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
-				&& Objects.equals(course_reg_start_date, other.course_reg_start_date)&& Objects.equals(course_start_date, other.course_start_date)
+				&& Objects.equals(course_nm, other.course_nm)
+				&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
+				&& Objects.equals(course_reg_start_date, other.course_reg_start_date)
+				&& Objects.equals(course_reg_stat, other.course_reg_stat)
+				&& Objects.equals(course_start_date, other.course_start_date)
 				&& Objects.equals(course_target, other.course_target) && Objects.equals(course_time, other.course_time)
 				&& Objects.equals(croom_id, other.croom_id) && Objects.equals(user_id, other.user_id)
-				&& Objects.equals(course_reg_stat, other.course_reg_stat);
+				&& Objects.equals(user_name, other.user_name);
 	}
 
 	public int getCourse_id() {
@@ -195,6 +222,14 @@ public class CourseDto {
 		this.user_id = user_id;
 	}
 
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
 	public String getCroom_id() {
 		return croom_id;
 	}
@@ -211,14 +246,32 @@ public class CourseDto {
 		this.course_reg_stat = course_reg_stat;
 	}
 
-	@Override
-	public String toString() {
-		return "BoardDto [course_id=" + course_id + ", course_nm=" + course_nm + ", course_image=" + course_image
-				+ ", course_reg_start_date=" + course_reg_start_date + ", course_reg_end_date=" + course_reg_end_date
-				+ ", course_start_date=" + course_start_date + ", course_end_date=" + course_end_date + ", course_day="
-				+ course_day + ", course_time=" + course_time + ", course_target=" + course_target + ", course_cost="
-				+ course_cost + ", course_info=" + course_info + ", user_id=" + user_id + ", croom_id=" + croom_id
-				+ ", course_reg_stat=" + course_reg_stat + "]";
+	public String reg_sd() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String reg_start_date = sdFormat.format(course_reg_start_date);
+		
+		return reg_start_date;
+	}
+	
+	public String reg_ed() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String reg_end_date = sdFormat.format(course_reg_end_date);
+		
+		return reg_end_date;
+	}
+	
+	public String course_sd() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String start_date = sdFormat.format(course_start_date);
+		
+		return start_date;
+	}
+	
+	public String course_ed() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String end_date = sdFormat.format(course_end_date);
+		
+		return end_date;
 	}
 
 }
