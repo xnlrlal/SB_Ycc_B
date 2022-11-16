@@ -78,11 +78,6 @@
               <option value="">202호</option>
               <option value="">203호</option>
             </optgroup>
-            <optgroup label="3층">
-              <option value="">301호</option>
-              <option value="">302호</option>
-              <option value="">소강당</option>
-            </optgroup>
           </select>
         </p>
 
