@@ -8,6 +8,11 @@
     <%@include file="/WEB-INF/views/metahead.jsp"%>
 
 <title>Young문화센터 - 대관신청</title>
+<style>
+	td{
+		text-align:center;
+	}
+</style>
 </head>
 <body>
 <!-- header inlcude -->
@@ -61,22 +66,36 @@
         <p>
             <h4>대관 장소 선택</h4>
    
-          <select id="select">
+          <select id="selectplace">
             <option value="">장소 선택</option>
-            <optgroup label="외부">
-              <option value="">테니스장A</option>
-              <option value="">축구장</option>
-              <option value="">농구장</option>
+            <optgroup label="외부"> <!-- 외부 location code = 0 -->
+            <c:forEach var="result" items="${placelist }">
+              <option value="${result.croom_id}">${result.croom_location == 0 ? result.croom_name : ""}</option>
+            </c:forEach>
             </optgroup>
-            <optgroup label="1층">
-              <option value="">101호</option>
-              <option value="">강당</option>
-              <option value="">다목적실</option>
+            <optgroup label="1층"> <!-- 1층 location code = 1 -->
+            <c:forEach var="result" items="${placelist }">
+              <option value="${result.croom_id }">${result.croom_location == 1 ? result.croom_name : ""}</option>
+            </c:forEach>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
             </optgroup>
-            <optgroup label="2층">
-              <option value="">201호</option>
-              <option value="">202호</option>
-              <option value="">203호</option>
+            <optgroup label="2층"> <!-- 2층 location code = 2 -->
+            <c:forEach var="result" items="${placelist }">
+              <option value="${result.croom_id }">${result.croom_location == 2 ? result.croom_name : ""}</option>
+            </c:forEach>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
+            </optgroup>
+            <optgroup label="3층"> <!-- 3층 location code = 3 -->
+            <c:forEach var="result" items="${placelist }">
+              <option value="${result.croom_id }">${result.croom_location == 3 ? result.croom_name : ""}</option>
+            </c:forEach>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
             </optgroup>
           </select>
         </p>
@@ -90,27 +109,8 @@
           <input type="date" id="datetime-local" name="rday" onchange="printDate(), setMinValue()">
           
         </p>
-        <p>
-          <label for="select_time" class="mt-1 mb-3">
-            <h4>대관 시간 선택</h4>
-          </label>
-          <select id="select_time" onchange="handleOnChange(this)">
-            <option value="">시간 선택</option>
-            <option value="">06:10 - 08:00</option>
-            <option value="">08:10 - 10:00</option>
-            <option value="">10:10 - 12:00</option>
-            <option value="">12:10 - 14:00</option>
-            <option value="">14:10 - 16:00</option>
-            <option value="">16:10 - 18:00</option>
-            <option value="">18:10 - 20:00</option>
-            <option value="">20:10 - 22:00</option>
-          </select>
-        </p>
         
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            신청하기
-          </button>
+          
         <!--대관 장소 선택 끝-->
       </div>
     </div>
@@ -119,42 +119,60 @@
   <div class="container">
     <!--대관 장소 선택 시작-->
 
-    <div class="rentaldatearea">
-      <h5>00건의 예약이 있습니다.</h5>
-    </div>
-
-    <hr>
+    <br><hr><br>
 
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">대관 장소</th>
-          <th scope="col">예약 번호</th>
-          <th scope="col">시간</th>
-          <th scope="col">예약일</th>
+          <th scope="col" style="text-align:center;">대관 장소</th>
+          <th scope="col" style="text-align:center;">시간</th>
+          <th scope="col" style="text-align:center;">예약일</th>
+          <th scope="col" style="text-align:center;">예약</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>농구장</td>
-          <td>012223</td>
-          <td>14:00-16:00</td>
-          <td>2022-11-11</td>
+          <td></td>
+          <td>08:00 ~ 10:10</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
         </tr>
         <tr>
-          <td>농구장</td>
-          <td>012225</td>
-          <td>18:00-20:00</td>
-          <td>2022-11-11</td>
+          <td></td>
+          <td>10:20 ~ 12:10</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
         </tr>
         <tr>
-          <td>농구장</td>
-          <td>0122223</td>
-          <td>20:00-22:00</td>
-          <td>2022-11-11</td>
+          <td></td>
+          <td>12:20 ~ 14:10</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>14:20 ~ 16:10</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>16:20 ~ 18:10</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>18:20 ~ 20:00</td>
+          <td><div id="rsdate"></div></td>
+          <td><input type="checkbox"></td>
         </tr>
       </tbody>
     </table>
+    <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+            신청하기
+          </button>
   </div>
   
   <!-- Modal -->
@@ -187,12 +205,12 @@
                 </td>
               </tr>
               <tr>
-                <th>이용 시간</th>
-                <td colspan="3">
+                <th>예약 시간</th>
+                <td colspan="3" onchange="printDate()">
                   <div id="rtime"></div>
                 </td>
               </tr>
-            </table>
+             </table>
           </div>
         </div>
         <div class="modal-footer">

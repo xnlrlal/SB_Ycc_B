@@ -38,8 +38,8 @@ public class RentalController{
 	public String rentalPlace(Model m)
 	{
 		try {
-			List<RentalDto> place = RentalDao.selectRentalPlace();
-			m.addAttribute("place", place);
+			List<RentalDto> placelist = rentalDao.selectRentalPlace();
+			m.addAttribute("placelist", placelist);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
