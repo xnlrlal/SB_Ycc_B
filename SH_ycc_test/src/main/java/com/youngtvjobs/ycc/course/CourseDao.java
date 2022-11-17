@@ -14,5 +14,7 @@ public interface CourseDao {
 	int deleteAll() throws Exception;
 	int insert(CourseDto courseDto) throws Exception;
 
+	List<CourseDto> orderbyPage(SearchItem sc) throws Exception;
+
 	
 }

@@ -30,4 +30,10 @@ public class CourseServiceImpl implements CourseService {
 		return courseDao.selectPage(map);
 	}
 
+	@Override
+	public List<CourseDto> orderbyPage(SearchItem sc) throws Exception {
+		// TODO Auto-generated method stub
+		return courseDao.orderbyPage(sc);
+	}
+
 }

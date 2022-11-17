@@ -242,7 +242,8 @@
 					</tr>
 					<tr>
 						<td class="text-center align-self-center">5</td>
-						<td>쇠고기 육전, 호박죽, 건새우 시금치 된장국
+						<td>
+							쇠고기 육전, 호박죽, 건새우 시금치 된장국
 							<div class="row" id="dcol">
 								<div class="col-md-12">수강생 준비물 :</div>
 								<div class="col-md-12">비고 :</div>

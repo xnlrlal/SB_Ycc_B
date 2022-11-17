@@ -39,6 +39,11 @@ public class CourseDaoImpl implements CourseDao{
 		// TODO Auto-generated method stub
 		return session.selectList(namespace + "selectPage", map);
 	}
+	@Override
+	public List<CourseDto> orderbyPage(SearchItem sc) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + "searchSelectPage", sc);
+	}
 
 
 }

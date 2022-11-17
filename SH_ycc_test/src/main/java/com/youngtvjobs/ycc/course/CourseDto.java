@@ -38,7 +38,6 @@ public class CourseDto {
 	private String user_id;
 	private String user_name;
 	private String croom_id;
-	private String course_reg_stat;
 	
 	public CourseDto() {
 		// TODO Auto-generated constructor stub
@@ -47,7 +46,7 @@ public class CourseDto {
 	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
 			String course_time, String course_target, int course_cost, String course_info, String user_id,
-			String user_name, String croom_id, String course_reg_stat) {
+			String user_name, String croom_id) {
 		super();
 		this.course_id = course_id;
 		this.course_nm = course_nm;
@@ -64,13 +63,12 @@ public class CourseDto {
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.croom_id = croom_id;
-		this.course_reg_stat = course_reg_stat;
 	}
 
 	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
 			String course_time, String course_target, int course_cost, String course_info, String user_id,
-			String croom_id, String course_reg_stat) {
+			String croom_id) {
 		//super();
 		this.course_id = course_id;
 		this.course_nm = course_nm;
@@ -86,13 +84,12 @@ public class CourseDto {
 		this.course_info = course_info;
 		this.user_id = user_id;
 		this.croom_id = croom_id;
-		this.course_reg_stat = course_reg_stat;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(course_cost, course_day, course_end_date, course_id, course_image, course_info, course_nm,
-				course_reg_end_date, course_reg_start_date, course_reg_stat, course_start_date, course_target,
+				course_reg_end_date, course_reg_start_date, course_start_date, course_target,
 				course_time, croom_id, user_id, user_name);
 	}
 
@@ -111,7 +108,6 @@ public class CourseDto {
 				&& Objects.equals(course_nm, other.course_nm)
 				&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
 				&& Objects.equals(course_reg_start_date, other.course_reg_start_date)
-				&& Objects.equals(course_reg_stat, other.course_reg_stat)
 				&& Objects.equals(course_start_date, other.course_start_date)
 				&& Objects.equals(course_target, other.course_target) && Objects.equals(course_time, other.course_time)
 				&& Objects.equals(croom_id, other.croom_id) && Objects.equals(user_id, other.user_id)
@@ -236,14 +232,6 @@ public class CourseDto {
 
 	public void setCroom_id(String croom_id) {
 		this.croom_id = croom_id;
-	}
-
-	public String getCourse_reg_stat() {
-		return course_reg_stat;
-	}
-
-	public void setCourse_reg_stat(String course_reg_stat) {
-		this.course_reg_stat = course_reg_stat;
 	}
 
 	public String reg_sd() {

@@ -14,21 +14,23 @@ public class SearchItem {
 	private String option = "";
 	private String keyword = "";
 	private Integer offset;
+	private String orderby = "";
 	
 	public SearchItem() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public SearchItem(Integer page, Integer pageSize) {
-		this(page, pageSize, "", "");
+		this(page, pageSize, "", "", "");
 	}
 
-	public SearchItem(Integer page, Integer pageSize, String option, String keyword) {
+	public SearchItem(Integer page, Integer pageSize, String option, String keyword, String orderby) {
 		// super();
 		this.page = page;
 		this.pageSize = pageSize;
 		this.option = option;
 		this.keyword = keyword;
+		this.orderby = orderby;
 	}
 	
 	public String getQueryString() {
@@ -42,7 +44,16 @@ public class SearchItem {
 				.queryParam("pageSize", pageSize)
 				.queryParam("option", option)
 				.queryParam("keyword", keyword)
+				.queryParam("orderby", orderby)
 				.build().toString();
+	}
+
+	public String getOrderby() {
+		return orderby;
+	}
+
+	public void setOrderby(String orderby) {
+		this.orderby = orderby;
 	}
 
 	public Integer getPage() {
@@ -90,6 +101,7 @@ public class SearchItem {
 	@Override
 	public String toString() {
 		return "SearchItem [page=" + page + ", pageSize=" + pageSize + ", option=" + option + ", keyword=" + keyword
-				+ ", offset=" + offset + "]";
+				+ ", offset=" + offset + ", orderby=" + orderby + "]";
 	}
+
 }

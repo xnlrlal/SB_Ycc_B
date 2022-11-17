@@ -26,7 +26,7 @@ public class CourseDaoImplTest2 {
 		for (int i=1; i<=250; i++) {
 			CourseDto courseDto = 
 					new CourseDto(i, "이젠웹개발"+i, null, sdFormat.parse("2022-11-01"), sdFormat.parse("2022-11-30"), sdFormat.parse("2022-12-01"), sdFormat.parse("2023-01-31")
-							, "월수금", "09:00~12:00", "모두", 100000, "웹개발과정"+i, "ezen", "201", "접수중");
+							, "월수금", "09:00~12:00", "모두", 100000, "웹개발과정"+i, "ezen", "201");
 			courseDao.insert(courseDto);
 		}
 	}

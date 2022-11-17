@@ -29,20 +29,20 @@
 				<div class="row gap-1 mb-2">
 					<div class="col-md-3">
 						<div class="row">
-							<label for="sidebar-position2" class="col-4 align-self-center">분류</label>
+							<label for="sidebar-position2" class="col-4 align-self-center text-center">분류</label>
 							<div class="col-8">
 								<select class="form-select" aria-label=".form-select-sm example" name="option">
-									<option value="A" ${pr.sc.option=='A' || pr.sc.option=='' ? "selected" : ""}>전체</option>
-									<option value="S" ${pr.sc.option=='S' ? "selected" : ""}>스포츠</option>
-									<option value="C" ${pr.sc.option=='C' ? "selected" : ""}>문화</option>
-									<option value="E" ${pr.sc.option=='E' ? "selected" : ""}>교육</option>
+									<option value="All" ${pr.sc.option=='All' || pr.sc.option=='' ? "selected" : ""}>전체</option>
+									<option value="Spo" ${pr.sc.option=='Spo' ? "selected" : ""}>운동</option>
+									<option value="Cul" ${pr.sc.option=='Cul' ? "selected" : ""}>문화</option>
+									<option value="Edu" ${pr.sc.option=='Edu' ? "selected" : ""}>교육</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="row">
-							<label for="sidebar-position2" class="col-4 align-self-center">수강대상</label>
+							<label for="sidebar-position2" class="col-4 align-self-center text-center">수강대상</label>
 							<div class="col-8">
 								<select class="form-select"	aria-label=".form-select example">
 									<option selected>전체</option>
@@ -55,7 +55,7 @@
 					</div>
 					<div class="col-md-3">
 						<div class="row">
-							<label for="sidebar-position3" class="col-4 align-self-center">접수상태</label>
+							<label for="sidebar-position3" class="col-4 align-self-center text-center">접수상태</label>
 							<div class="col-8">
 								<select class="form-select"	aria-label=".form-select example">
 									<option selected>전체</option>
@@ -80,12 +80,16 @@
 				</div>
 			</div>
 		</form>
-
-		<select class="form-select form-select my-3 float-end" aria-label=".form-select-sm example" style="width: 100px;">
-			<option value="N" selected>최신순</option>
-			<option value="C">강좌명순</option>
-			<option value="S">평점순</option>
-		</select>
+		<form class="my-3 float-end" action="<c:url value="/course/search${pr.sc.queryString }" />" method="get">
+		<div class="row">
+			<select class="form-select col-auto" name="orderby" aria-label=".form-select-sm example" style="width: auto;">
+				<option value="New" ${pr.sc.orderby=='New' || pr.sc.orderby=='' ? "selected" : ""}>강좌명순</option>
+				<option value="End" ${pr.sc.orderby=='End' ? "selected" : ""}>접수마감일순</option>
+				<option value="Start" ${pr.sc.orderby=='Start' ? "selected" : ""}>수강시작일순</option>
+			</select>
+			<button class="d-inline col-auto btn btn-secondary" type="submit">조회</button>
+		</div>
+		</form>
 
 		<table class="table text-center">
 			<thead class="table-light align-middle">
@@ -105,10 +109,10 @@
 						<td><a class="tdeco-none" href="<c:url value="/course/detail${pr.sc.queryString }&course_id=${courseDto.course_id }" />">${courseDto.course_nm }</a></td>
 						<td>${courseDto.course_sd() }<br>~${courseDto.course_ed() }</td>
 						<td>${courseDto.course_day }<br>${courseDto.course_time }</td>
-						<td>${courseDto.user_id }</td>
+						<td>${courseDto.user_name }</td>
 						<td>${courseDto.course_cost }</td>
 						<td>${courseDto.reg_sd() }<br>~${courseDto.reg_ed() }</td>
-						<td>${courseDto.course_reg_stat }</td>
+						<td></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -116,7 +120,7 @@
 		<br>
 		<nav aria-label="Page navigation example">
 			<c:if test="${totalCnt == null || totalCnt == 0}">
-				<div>게시물이 없습니다.</div>
+				<div class="text-center mb-5">게시물이 없습니다.</div>
 			</c:if>
 			<c:if test="${totalCnt != null || totalCnt != 0}">
 				<ul class="pagination justify-content-center">
@@ -127,7 +131,7 @@
 						<a class="page-link" href="<c:url value="/course/search${pr.sc.getQueryString(i) }" />">${i }</a>
 					</c:forEach>
 					<c:if test="${pr.showNext }">
-						<li class="page-item"><a class="page-link" href="<c:url value="/course/search${pr.sc.getQueryString(pr.endPage+1) }" />">&raquo;</a></li>
+						<li class="page-item"><a class="page-link" href="<c:url value="/course/search${pr.sc.getQueryString(pr.endPage+1) }" />"> &raquo; </a></li>
 					</c:if>
 				</ul>
 			</c:if>
