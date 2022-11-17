@@ -1,7 +1,10 @@
 package com.youngtvjobs.ycc.course;
 
+import java.util.List;
+
 public interface CourseDao {
 	
-	CourseDto select(Integer course_id) throws Exception;
-
+	List<CourseDto> selectCourselist() throws Exception;
+	int deleteAll() throws Exception;
+	int insert(CourseDto dto) throws Exception;
 }

@@ -1,9 +1,10 @@
 package com.youngtvjobs.ycc.course;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Objects;
 
 public class CourseDto {
-	
+
 	private int course_id;
 	private String course_nm;
 	private String course_image;
@@ -12,13 +13,14 @@ public class CourseDto {
 	private Date course_start_date;
 	private Date course_end_date;
 	private String course_day;
-	private String course_time; //구글링
+	private String course_time; // 구글링
 	private String course_target;
 	private int course_cost;
 	private String course_info;
 	private String user_id;
 	private String croom_id;
-	
+	private String user_name;
+
 	public CourseDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -27,7 +29,7 @@ public class CourseDto {
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
 			String course_time, String course_target, int course_cost, String course_info, String user_id,
 			String croom_id) {
-		//super();
+		// super();
 		this.course_id = course_id;
 		this.course_nm = course_nm;
 		this.course_image = course_image;
@@ -44,6 +46,34 @@ public class CourseDto {
 		this.croom_id = croom_id;
 	}
 
+	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
+			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
+			String course_time, String course_target, int course_cost, String course_info, String user_id,
+			String croom_id, String user_name) {
+		// super();
+		this.course_id = course_id;
+		this.course_nm = course_nm;
+		this.course_image = course_image;
+		this.course_reg_start_date = course_reg_start_date;
+		this.course_reg_end_date = course_reg_end_date;
+		this.course_start_date = course_start_date;
+		this.course_end_date = course_end_date;
+		this.course_day = course_day;
+		this.course_time = course_time;
+		this.course_target = course_target;
+		this.course_cost = course_cost;
+		this.course_info = course_info;
+		this.user_id = user_id;
+		this.croom_id = croom_id;
+		this.user_name = user_name;
+	}
+
+	/*
+	 * public CourseDto(int i, String string, String string2, java.util.Date parse,
+	 * java.util.Date parse2, java.util.Date parse3, java.util.Date parse4, String
+	 * string3, String string4, String string5, int j, String string6, String
+	 * string7, String string8) { // TODO Auto-generated constructor stub }
+	 */
 	public int getCourse_id() {
 		return course_id;
 	}
@@ -165,8 +195,41 @@ public class CourseDto {
 				+ course_cost + ", course_info=" + course_info + ", user_id=" + user_id + ", croom_id=" + croom_id
 				+ "]";
 	}
-	
-	
-	
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(course_cost, course_day, course_end_date, course_id, course_image, course_info, course_nm,
+				course_reg_end_date, course_reg_start_date, course_start_date, course_target, course_time, croom_id,
+				user_id, user_name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CourseDto other = (CourseDto) obj;
+		return course_cost == other.course_cost && Objects.equals(course_day, other.course_day)
+				&& Objects.equals(course_end_date, other.course_end_date) && course_id == other.course_id
+				&& Objects.equals(course_image, other.course_image) && Objects.equals(course_info, other.course_info)
+				&& Objects.equals(course_nm, other.course_nm)
+				&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
+				&& Objects.equals(course_reg_start_date, other.course_reg_start_date)
+				&& Objects.equals(course_start_date, other.course_start_date)
+				&& Objects.equals(course_target, other.course_target) && Objects.equals(course_time, other.course_time)
+				&& Objects.equals(croom_id, other.croom_id) && Objects.equals(user_id, other.user_id)
+				&& Objects.equals(user_name, other.user_name);
+	}
 
 }

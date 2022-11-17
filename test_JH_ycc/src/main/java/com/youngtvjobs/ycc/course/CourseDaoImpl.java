@@ -1,5 +1,7 @@
 package com.youngtvjobs.ycc.course;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,22 @@ public class CourseDaoImpl implements CourseDao{
 	
 	
 	@Override
-	public CourseDto select(Integer course_id) throws Exception {
+	public List<CourseDto> selectCourselist() throws Exception {
 		
-		return session.selectOne(namespace + "selectCourselist", course_id);
+		return session.selectList(namespace + "selectCourselist");
+	}
+
+
+	@Override
+	public int deleteAll() throws Exception {
+		return session.delete(namespace + "deleteAll");
+	}
+
+
+	@Override
+	public int insert(CourseDto dto) throws Exception {
+		// TODO Auto-generated method stub
+		return session.insert(namespace + "insert", dto);
 	}
 
 }
