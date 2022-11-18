@@ -59,63 +59,21 @@ a {
 <!-- header inlcude -->
 <%@include file="/WEB-INF/views/header.jsp"%>
 
+<script type="text/javascript">
+/* 		$(document).ready(function(){
+			let isSelected = $("option[name=option]").attr('selected');
+			
+			//1. 읽기 상태이면 수정상태로 변경
+			if(isSelected == 'readonly'){
+				$(".writing-header").html("게시판 수정")
+				$("input[name=title]").attr('readonly', false)
+				$("textarea").attr('readonly', false)
+				$("#modifyBtn").html("<i class='fa fa-pen'></i> 등록")
+				return;
+			}
+		}) */
+</script>
 
-  <!-- 캘린더 모달창 -->
-  <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header my-3" style="align-items: center;">
-        <h1 class="modal-title fs-3 ps-5 mt-3 fw-bold" id="exampleModalLabel">강좌 일정</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body mx-5">
-        <table class="table modal-table">
-          <thead class="table-light">
-            <tr>
-              <th scope="col-6">강좌명</th>
-              <th scope="col-3">수강기간</th>
-              <th scope="col-3">접수기간</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr>
-              <td><a href="">수영 기초반</a></td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-            </tr>
-            <tr>
-              <td><a href="">수영 기초반</a></td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-            </tr>
-            <tr>
-              <td><a href="">수영 기초반</a></td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-            </tr>
-            <tr>
-              <td><a href="">수영 기초반</a></td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-            </tr>
-            <tr>
-              <td><a href="">수영 기초반</a></td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-              <td>2022/10/25 ~ 2022/11/25</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 
     <!-- 본문 -->
     <div class="container">
@@ -135,9 +93,10 @@ a {
                     <label for="sidebar-position2" class="col-4 col-form-label">분류</label>
                     <div class="col-8">
                       <select class="form-select form-select-sm col-6 mt-1" aria-label=".form-select-sm example" name="option">
-                        <option value="A" ${pr.sc.option=='A' || pr.sc.option=='' ? "selected" : ""} >전체</option>
-                        <option value="1">수영</option>
-                        <option value="2">베이킹</option>
+                      	<c:forEach var="CourseDto" items="${typeList }">
+	                      	<!--  <option value="A" ${pr.sc.option=='A' || pr.sc.option=='' ? "selected" : ""} >전체</option>-->
+	                        <option value="${CourseDto.course_cate_cd }">${CourseDto.course_cate_name }</option>
+                      	</c:forEach>
                       </select>
                     </div>
                   </div>

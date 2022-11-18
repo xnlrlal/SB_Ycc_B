@@ -22,4 +22,9 @@ public class CourseServiceImpl implements CourseService {
 		return courseDao.selectCourselist(sc);
 	}
 
+	@Override
+	public List<CourseDto> getCourseType() throws Exception {
+		return courseDao.selectFromCourseType();
+	}
+
 }

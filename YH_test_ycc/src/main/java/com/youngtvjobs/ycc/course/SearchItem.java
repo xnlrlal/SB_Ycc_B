@@ -17,6 +17,7 @@ public class SearchItem {
 	private String keyword = "";
 	private Integer offset;
 	
+	
 	public SearchItem() {
 		// TODO Auto-generated constructor stub
 	}
@@ -34,19 +35,16 @@ public class SearchItem {
 	}
 	
 	
-	public String getQueryString() {
-		return getQueryString(page);
-	}
-	
-	// ?page=10&pageSize=10&option=A&keyword=title
-	public String getQueryString(Integer page) {
-		return UriComponentsBuilder.newInstance()	//媛앹껜 �깮�꽦
-				.queryParam("page", page)
-				.queryParam("pageSize", pageSize)
-				.queryParam("option", option)
-				.queryParam("keyword", keyword)
-				.build().toString();
-	}
+//	public String getQueryString() {
+//		return getQueryString(article_board_type);
+//	}
+//	
+//	// ?page=10&pageSize=10&option=A&keyword=title
+//	public String getQueryString(String article_board_type) {
+//		return UriComponentsBuilder.newInstance()	
+//				.queryParam("article_board_type", article_board_type)
+//				.build().toString();
+//	}
 	
 
 	public Integer getPage() {

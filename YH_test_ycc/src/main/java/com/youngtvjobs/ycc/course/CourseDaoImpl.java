@@ -34,6 +34,11 @@ public class CourseDaoImpl implements CourseDao {
 		return session.selectList(namespace+"selectCourselist", sc);
 	}
 
+	@Override
+	public List<CourseDto> selectFromCourseType() throws Exception {
+		return session.selectList(namespace+"selectFromCourseType");
+	}
+
 
 	
 	
