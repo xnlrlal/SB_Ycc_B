@@ -4,7 +4,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import static java.util.Objects.requireNonNullElse;
 import static java.lang.Math.*;
 
-public class SearchItem {
+public class CourseSearchItem {
 	public static final int DEFAULT_PAGE_SIZE = 10;
 	public static final int MIN_PAGE_SIZE = 5;
 	public static final int MAX_PAGE_SIZE = 50;
@@ -18,15 +18,15 @@ public class SearchItem {
 	private Integer offset;
 	private String orderby = "";
 	
-	public SearchItem() {
+	public CourseSearchItem() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public SearchItem(Integer page, Integer pageSize) {
+	public CourseSearchItem(Integer page, Integer pageSize) {
 		this(page, pageSize, "", "", "", "", "");
 	}
 
-	public SearchItem(Integer page, Integer pageSize, String cate, String target, String stat, String keyword, String orderby) {
+	public CourseSearchItem(Integer page, Integer pageSize, String cate, String target, String stat, String keyword, String orderby) {
 		// super();
 		this.page = page;
 		this.pageSize = pageSize;
