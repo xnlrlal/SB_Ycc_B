@@ -52,7 +52,7 @@ public class CourseController {
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
 			
-			List<CourseDto> orderby = courseService.orderbyPage(sc);
+			List<CourseDto> orderby = courseService.getsearchResultPage(sc);
 			m.addAttribute("orderby", orderby);
 			
 			System.out.println(list.get(0).toString());

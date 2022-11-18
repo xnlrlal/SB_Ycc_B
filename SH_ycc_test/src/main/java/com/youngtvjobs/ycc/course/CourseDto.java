@@ -105,13 +105,68 @@ public class CourseDto {
 		return course_cost == other.course_cost && Objects.equals(course_day, other.course_day)
 				&& Objects.equals(course_end_date, other.course_end_date) && course_id == other.course_id
 				&& Objects.equals(course_image, other.course_image) && Objects.equals(course_info, other.course_info)
-				&& Objects.equals(course_nm, other.course_nm)
-				&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
+				&& Objects.equals(course_nm, other.course_nm)&& Objects.equals(course_reg_end_date, other.course_reg_end_date)
 				&& Objects.equals(course_reg_start_date, other.course_reg_start_date)
 				&& Objects.equals(course_start_date, other.course_start_date)
 				&& Objects.equals(course_target, other.course_target) && Objects.equals(course_time, other.course_time)
 				&& Objects.equals(croom_id, other.croom_id) && Objects.equals(user_id, other.user_id)
 				&& Objects.equals(user_name, other.user_name);
+	}
+	
+	// 상태(오픈예정, 접수가능, 접수마감)
+	public String course_stat() {
+		Date nowdate = new Date();
+		System.out.println(nowdate);
+		int result1 = nowdate.compareTo(course_reg_start_date);
+		int result2 = nowdate.compareTo(course_reg_end_date);
+		String stat = null;
+
+		// nowdate는 course_reg_start_date 이전 날짜
+		if (result1 < 0) {
+			stat = "오픈예정";
+		    System.out.println("nowdate는 course_reg_start_date 이전 날짜");
+		}
+		// nowdate는 course_reg_end_date 이후 날짜
+		else if(result2 > 0) {
+			stat = "접수마감";
+		    System.out.println("nowdate는 course_reg_end_date 이후 날짜");
+		}
+		// nowdate는 course_reg_start_date와 같거나 이후 날짜
+		else {
+			stat = "접수가능";
+		    System.out.println("nowdate는 course_reg_start_date 같거나 이후 날짜");
+		}
+		
+		return stat;
+	}
+
+	// Date -> String으로 형변환(course_reg_start_date, course_reg_end_date, course_start_date, course_end_date)
+	public String reg_sd() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String reg_start_date = sdFormat.format(course_reg_start_date);
+		
+		return reg_start_date;
+	}
+	
+	public String reg_ed() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String reg_end_date = sdFormat.format(course_reg_end_date);
+		
+		return reg_end_date;
+	}
+	
+	public String course_sd() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String start_date = sdFormat.format(course_start_date);
+		
+		return start_date;
+	}
+	
+	public String course_ed() {
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String end_date = sdFormat.format(course_end_date);
+		
+		return end_date;
 	}
 
 	public int getCourse_id() {
@@ -234,32 +289,5 @@ public class CourseDto {
 		this.croom_id = croom_id;
 	}
 
-	public String reg_sd() {
-		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String reg_start_date = sdFormat.format(course_reg_start_date);
-		
-		return reg_start_date;
-	}
 	
-	public String reg_ed() {
-		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String reg_end_date = sdFormat.format(course_reg_end_date);
-		
-		return reg_end_date;
-	}
-	
-	public String course_sd() {
-		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String start_date = sdFormat.format(course_start_date);
-		
-		return start_date;
-	}
-	
-	public String course_ed() {
-		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String end_date = sdFormat.format(course_end_date);
-		
-		return end_date;
-	}
-
 }
