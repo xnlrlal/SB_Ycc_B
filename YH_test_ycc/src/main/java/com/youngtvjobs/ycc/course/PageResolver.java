@@ -16,6 +16,14 @@ public class PageResolver {
 	private boolean showNext = false;	//�씠�썑瑜� 蹂댁뿬以꾩� �뿬遺� (endPage==totalPage �씠硫� showNext�뒗 false )
 	private boolean showPrev = false;	//�씠�쟾�쓣 蹂댁뿬以꾩� �뿬遺� (beginPage==1�씠 �븘�땲硫� showPrev�뒗 true)
 	
+	public PageResolver() {
+	}
+	
+	public PageResolver(SearchItem sc) {
+//		super();
+		this.sc = sc;
+	}
+
 	public PageResolver(int totalCnt, Integer page) {
 		this(totalCnt, new SearchItem(page, 10));
 	}

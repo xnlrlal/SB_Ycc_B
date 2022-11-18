@@ -8,5 +8,7 @@ public interface CourseService {
 	int getSearchResultCnt(SearchItem sc) throws Exception;
 
 	List<CourseDto> getSearchResultPage(SearchItem sc) throws Exception;
+	
+	List<CourseDto> getCourseType() throws Exception;
 
 }
