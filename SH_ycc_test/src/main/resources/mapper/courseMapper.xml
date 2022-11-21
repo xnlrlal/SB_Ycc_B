@@ -7,8 +7,8 @@
 
 	<sql id="selectFromCourse">
 		SELECT course_id, course_nm, course_image, course_reg_start_date, course_reg_end_date
-		, course_start_date, course_end_date, course_day, course_time, course_target
-		, course_cost, course_info, tb_course.user_id, croom_id, user_name, tb_course.course_cate_cd
+					, course_start_date, course_end_date, course_day, course_time, course_target
+					, course_cost, course_info, tb_course.user_id, croom_id, user_name, tb_course.course_cate_cd
 		FROM tb_course
 		join tb_user
 		on tb_course.user_id = tb_user.user_id 
@@ -16,20 +16,41 @@
 		on tb_course.course_cate_cd = course_type.course_cate_cd
 	</sql>
 	
-	<sql id="searchCondition">
+	<sql id="searchCate">
 		<choose>
-			<when test='option=="Spo"'>
-				AND course_nm LIKE concat('%', #{keyword}, '%')
+			<when test='cate == "Spo"'>
+				AND tb_course.course_cate_cd = 'Spo'
+				AND course_nm LIKE concat('%', #{keyword}, '%') 
 			</when>
-			<when test='option=="Cul"'>
-				AND course_nm LIKE concat('%', #{keyword}, '%')
+			<when test='cate == "Cul"'>
+				AND tb_course.course_cate_cd = 'Cul'
+				AND course_nm LIKE concat('%', #{keyword}, '%') 
 			</when>
-			<when test='option=="Edu"'>
-				AND course_nm LIKE concat('%', #{keyword}, '%')
+			<when test='cate == "Edu"'>
+				AND tb_course.course_cate_cd = 'Edu'
+				AND course_nm LIKE concat('%', #{keyword}, '%') 
 			</when>
 			<otherwise>
-				AND (course_nm LIKE concat('%', #{keyword}, '%')
-				OR tb_course.user_id LIKE concat('%', #{keyword}, '%')) 
+				AND course_nm LIKE concat('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="searchTarget">
+		<choose>
+			<when test='target == "Adu"'>
+				AND tb_course.course_target = '성인' 
+			</when>
+			<when test='target == "Stu"'>
+				AND tb_course.course_target = '청소년' 
+			</when>
+			<when test='target == "Chd"'>
+				AND tb_course.course_target = '유아' 
+			</when>
+			<when test='target == "Old"'>
+				AND tb_course.course_target = '노인' 
+			</when>
+			<otherwise>
 			</otherwise>
 		</choose>
 	</sql>
@@ -67,18 +88,20 @@
 	</select>
 	
 	<!-- 검색된 강좌의수 -->
-	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+	<select id="searchResultCnt" parameterType="CourseSearchItem" resultType="int">
 		select count(*)
 		from tb_course 
 		where true 
-		<include refid="searchCondition" />
+		<include refid="searchCate" />
+		<!-- <include refid="searchTarget" /> -->
 	</select> 
 
 	<!-- 검색된 강좌 리스트 -->
-	<select id="searchSelectPage" parameterType="SearchItem" resultType="CourseDto">
+	<select id="searchSelectPage" parameterType="CourseSearchItem" resultType="CourseDto">
 		<include refid="selectFromCourse" />
 		where true 
-		<include refid="searchCondition" />
+		<include refid="searchCate" />
+		<include refid="searchTarget" />
 		<include refid="orderby" />
 		limit #{pageSize} offset #{offset}
 	</select> 

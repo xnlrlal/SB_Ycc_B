@@ -8,4 +8,5 @@ public interface CourseDao {
 	List<CourseDto> selectCourselist(SearchItem sc) throws Exception;
 	int insert(CourseDto courseDto) throws Exception;
 	int searchResultCnt(SearchItem sc) throws Exception;
+	List<CourseDto> selectFromCourseType() throws Exception;
 }

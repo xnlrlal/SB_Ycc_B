@@ -24,18 +24,18 @@
 	<div class="container mt-5">
 		<h2>수강신청</h2>
 		<hr>
-		<form action="<c:url value="/course/search" />" method="get">
+		<form action="" method="get">
 			<div class="searchBox p-3">
 				<div class="row gap-1 mb-2">
 					<div class="col-md-3">
 						<div class="row">
 							<label for="sidebar-position2" class="col-4 align-self-center text-center">분류</label>
 							<div class="col-8">
-								<select class="form-select" aria-label=".form-select-sm example" name="option">
-									<option value="All" ${pr.sc.option=='All' || pr.sc.option=='' ? "selected" : ""}>전체</option>
-									<option value="Spo" ${pr.sc.option=='Spo' ? "selected" : ""}>운동</option>
-									<option value="Cul" ${pr.sc.option=='Cul' ? "selected" : ""}>문화</option>
-									<option value="Edu" ${pr.sc.option=='Edu' ? "selected" : ""}>교육</option>
+								<select class="form-select" aria-label=".form-select-sm example" name="cate">
+									<option value="All" ${pr.sc.cate=='All' || pr.sc.cate=='' ? "selected" : ""}>전체</option>
+									<option value="Spo" ${pr.sc.cate=='Spo' ? "selected" : ""}>운동</option>
+									<option value="Cul" ${pr.sc.cate=='Cul' ? "selected" : ""}>문화</option>
+									<option value="Edu" ${pr.sc.cate=='Edu' ? "selected" : ""}>교육</option>
 								</select>
 							</div>
 						</div>
@@ -44,11 +44,12 @@
 						<div class="row">
 							<label for="sidebar-position2" class="col-4 align-self-center text-center">수강대상</label>
 							<div class="col-8">
-								<select class="form-select"	aria-label=".form-select example">
-									<option selected>전체</option>
-									<option value="1">성인</option>
-									<option value="2">학생</option>
-									<option value="3">영유아</option>
+								<select class="form-select"	aria-label=".form-select example" name="target">
+									<option value="All" ${pr.sc.target=='All' || pr.sc.target=='' ? "selected" : ""}>전체</option>
+									<option value="Adu" ${pr.sc.target=='Adu' ? "selected" : ""}>성인</option>
+									<option value="Stu" ${pr.sc.target=='Stu' ? "selected" : ""}>청소년</option>
+									<option value="Chd" ${pr.sc.target=='Chd' ? "selected" : ""}>유아</option>
+									<option value="Old" ${pr.sc.target=='Old' ? "selected" : ""}>노인</option>
 								</select>
 							</div>
 						</div>
@@ -57,11 +58,11 @@
 						<div class="row">
 							<label for="sidebar-position3" class="col-4 align-self-center text-center">접수상태</label>
 							<div class="col-8">
-								<select class="form-select"	aria-label=".form-select example">
-									<option selected>전체</option>
-									<option value="1">접수가능</option>
-									<option value="2">오픈예정</option>
-									<option value="3">접수마감</option>
+								<select class="form-select"	aria-label=".form-select example" name="stat">
+									<option value="All" ${pr.sc.stat=='All' || pr.sc.stat=='' ? "selected" : ""}>전체</option>
+									<option value="P" ${pr.sc.stat=='P' ? "selected" : ""}>접수가능</option>
+									<option value="O" ${pr.sc.stat=='O' ? "selected" : ""}>오픈예정</option>
+									<option value="E" ${pr.sc.stat=='E' ? "selected" : ""}>접수마감</option>
 								</select>
 							</div>
 						</div>
@@ -79,16 +80,14 @@
 					</div>
 				</div>
 			</div>
-		</form>
-		<form class="my-3 float-end" action="<c:url value="/course/search${pr.sc.queryString }" />" method="get">
-		<div class="row">
-			<select class="form-select col-auto" name="orderby" aria-label=".form-select-sm example" style="width: auto;">
-				<option value="New" ${pr.sc.orderby=='New' || pr.sc.orderby=='' ? "selected" : ""}>강좌명순</option>
-				<option value="End" ${pr.sc.orderby=='End' ? "selected" : ""}>접수마감일순</option>
-				<option value="Start" ${pr.sc.orderby=='Start' ? "selected" : ""}>수강시작일순</option>
-			</select>
-			<button class="d-inline col-auto btn btn-secondary" type="submit">조회</button>
-		</div>
+			<div class="row py-3 float-end">
+				<select class="form-select col-auto" name="orderby" aria-label=".form-select-sm example" style="width: auto;">
+					<option value="New" ${pr.sc.orderby=='New' || pr.sc.orderby=='' ? "selected" : ""}>강좌명순</option>
+					<option value="End" ${pr.sc.orderby=='End' ? "selected" : ""}>접수마감일순</option>
+					<option value="Start" ${pr.sc.orderby=='Start' ? "selected" : ""}>수강시작일순</option>
+				</select>
+				<button class="col-auto btn btn-secondary">조회</button>
+			</div>
 		</form>
 
 		<table class="table text-center">
@@ -112,7 +111,7 @@
 						<td>${courseDto.user_name }</td>
 						<td>${courseDto.course_cost }</td>
 						<td>${courseDto.reg_sd() }<br>~${courseDto.reg_ed() }</td>
-						<td></td>
+						<td class="${courseDto.course_stat() == '접수가능' ? 'text-primary' : 'text-secondary' }">${courseDto.course_stat() }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

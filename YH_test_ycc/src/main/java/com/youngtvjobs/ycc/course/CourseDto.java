@@ -36,18 +36,21 @@ public class CourseDto {
 	private String user_id;
 	private String croom_id;
 	private String user_name;
+	
+	// course_type Å×ÀÌºí
+	private String course_cate_cd;
+	private String course_cate_name;
+	
 
 	public CourseDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
 	public CourseDto(int course_id, String course_nm, String course_image, Date course_reg_start_date,
 			Date course_reg_end_date, Date course_start_date, Date course_end_date, String course_day,
 			String course_time, String course_target, int course_cost, String course_info, String user_id,
-			String croom_id, String user_name) {
-		super();
+			String croom_id, String user_name, String course_cate_cd, String course_cate_name) {
+//		super();
 		this.course_id = course_id;
 		this.course_nm = course_nm;
 		this.course_image = course_image;
@@ -63,15 +66,17 @@ public class CourseDto {
 		this.user_id = user_id;
 		this.croom_id = croom_id;
 		this.user_name = user_name;
+		this.course_cate_cd = course_cate_cd;
+		this.course_cate_name = course_cate_name;
 	}
 
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(course_cost, course_day, course_end_date, course_id, course_image, course_info, course_nm,
-				course_reg_end_date, course_reg_start_date, course_start_date, course_target, course_time, croom_id,
-				user_id, user_name);
+		return Objects.hash(course_cate_cd, course_cate_name, course_cost, course_day, course_end_date, course_id,
+				course_image, course_info, course_nm, course_reg_end_date, course_reg_start_date, course_start_date,
+				course_target, course_time, croom_id, user_id, user_name);
 	}
 
 	@Override
@@ -83,7 +88,9 @@ public class CourseDto {
 		if (getClass() != obj.getClass())
 			return false;
 		CourseDto other = (CourseDto) obj;
-		return course_cost == other.course_cost && Objects.equals(course_day, other.course_day)
+		return Objects.equals(course_cate_cd, other.course_cate_cd)
+				&& Objects.equals(course_cate_name, other.course_cate_name) && course_cost == other.course_cost
+				&& Objects.equals(course_day, other.course_day)
 				&& Objects.equals(course_end_date, other.course_end_date) && course_id == other.course_id
 				&& Objects.equals(course_image, other.course_image) && Objects.equals(course_info, other.course_info)
 				&& Objects.equals(course_nm, other.course_nm)
@@ -224,6 +231,22 @@ public class CourseDto {
 
 
 
+	public String getCourse_cate_cd() {
+		return course_cate_cd;
+	}
+
+	public void setCourse_cate_cd(String course_cate_cd) {
+		this.course_cate_cd = course_cate_cd;
+	}
+
+	public String getCourse_cate_name() {
+		return course_cate_name;
+	}
+
+	public void setCourse_cate_name(String course_cate_name) {
+		this.course_cate_name = course_cate_name;
+	}
+
 	@Override
 	public String toString() {
 		return "CourseDto [course_id=" + course_id + ", course_nm=" + course_nm + ", course_image=" + course_image
@@ -231,7 +254,8 @@ public class CourseDto {
 				+ ", course_start_date=" + course_start_date + ", course_end_date=" + course_end_date + ", course_day="
 				+ course_day + ", course_time=" + course_time + ", course_target=" + course_target + ", course_cost="
 				+ course_cost + ", course_info=" + course_info + ", user_id=" + user_id + ", croom_id=" + croom_id
-				+ ", user_name=" + user_name + "]";
+				+ ", user_name=" + user_name + ", course_cate_cd=" + course_cate_cd + ", course_cate_name="
+				+ course_cate_name + "]";
 	}
 
 

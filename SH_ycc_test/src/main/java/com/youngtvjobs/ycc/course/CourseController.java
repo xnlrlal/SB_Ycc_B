@@ -38,7 +38,7 @@ public class CourseController {
 	}
 	
 	@GetMapping("/course/search")
-	public String courseSearch(SearchItem sc, Model m, HttpServletRequest request) {
+	public String courseSearch(CourseSearchItem sc, Model m, HttpServletRequest request) {
 		if(!logincheck(request)) 
 			return "redirect:/login?toURL="+request.getRequestURL();
 		try {
@@ -52,7 +52,7 @@ public class CourseController {
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
 			
-			List<CourseDto> orderby = courseService.orderbyPage(sc);
+			List<CourseDto> orderby = courseService.getsearchResultPage(sc);
 			m.addAttribute("orderby", orderby);
 			
 			System.out.println(list.get(0).toString());

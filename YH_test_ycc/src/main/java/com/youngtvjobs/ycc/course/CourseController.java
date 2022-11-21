@@ -29,13 +29,10 @@ public class CourseController {
 			List<CourseDto> list = courseService.getSearchResultPage(sc);
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
-			
-			
-//				if(boardService.write(boardDto) != 1)
-//					throw new Exception("Write failed");
-//				
-//				rattr.addFlashAttribute("msg", "WRT_OK");
-//				return "redirect:/board/list";
+
+			//°­ÁÂºÐ·ù
+			List<CourseDto> typeList = courseService.getCourseType();
+			m.addAttribute("typeList", typeList);
 
 			
 		} catch (Exception e) {

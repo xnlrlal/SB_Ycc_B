@@ -13,13 +13,13 @@ public class CourseServiceImpl implements CourseService {
 	CourseDao courseDao;
 	
 	@Override
-	public int getsearchResultCnt(SearchItem sc) throws Exception {
+	public int getsearchResultCnt(CourseSearchItem sc) throws Exception {
 		// TODO Auto-generated method stub
 		return courseDao.searchResultCnt(sc);
 	}
 
 	@Override
-	public List<CourseDto> getsearchResultPage(SearchItem sc) throws Exception {
+	public List<CourseDto> getsearchResultPage(CourseSearchItem sc) throws Exception {
 		// TODO Auto-generated method stub
 		return courseDao.searchSelectPage(sc);
 	}
@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDto> orderbyPage(SearchItem sc) throws Exception {
+	public List<CourseDto> orderbyPage(CourseSearchItem sc) throws Exception {
 		// TODO Auto-generated method stub
 		return courseDao.orderbyPage(sc);
 	}

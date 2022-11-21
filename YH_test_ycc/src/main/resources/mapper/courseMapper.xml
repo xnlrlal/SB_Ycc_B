@@ -5,12 +5,13 @@
   
   <mapper namespace="com.youngtvjobs.ycc.course.CourseMapper">
  
-<!-- 	<sql id="selectFromCourse">
+	<sql id="selectCourse">
 		SELECT course_id, course_nm, course_image, course_reg_start_date,
 		course_reg_end_date, course_start_date, course_end_date, course_day,
 		course_time, course_target, course_cost, course_info, user_id,
-		croom_id
-	</sql> -->
+		croom_id, course_cate_cd
+		FROM tb_course
+	</sql>
 
 
 	<!-- 강좌 목록 보여주기 -->
@@ -27,6 +28,18 @@
 	 <sql id="searchCondition">
 		and course_nm like concat('%',#{keyword},'%')
 	</sql>
+	
+	<select id="" >
+		<include refid="selectCourse" />
+		join course_type
+		on course_type.course_id = tb_course.course_id
+	</select>
+	
+	
+	
+	<select id="selectFromCourseType" resultType="CourseDto">
+		select * from course_type
+	</select>
 
 	<select id="selectCourselist" parameterType="SearchItem" resultType="CourseDto">
 		<include refid="selectFromCourse" />
