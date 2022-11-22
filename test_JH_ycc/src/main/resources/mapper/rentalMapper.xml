@@ -4,13 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.youngtvjobs.ycc.rental.rentalMapper">
-  
-  <sql id="selectFromClassroom">
-  	SELECT * from classroom
-  </sql>
-  
-  <select id="selectRentalPlace" resultType="RentalDto">
-  	select * from classroom
-  </select>
-  
+	  
+	  <sql id="selectFromClassroom">
+	  	SELECT * from classroom
+	  </sql>
+	  
+	  <select id="selectRentalPlace" resultType="RentalDto">
+	  	select * from classroom
+	  </select>
+	  
+	  <select id="viewRentalPlace" resultType="RentalDto">
+	  	select  prental_id,prental_de ,pin.croom_id ,prental_duration 
+		from prental_info pin, classroom cr
+		where pin.croom_id = cr.croom_id 
+	  </select>
+	  
   </mapper>

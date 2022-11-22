@@ -6,16 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 public class RentalController{
 
 	@Autowired
-	RentalDao rentalDao;
+	RentalService rentalService;
 
 
 	//독서실 대여
@@ -45,9 +49,9 @@ public class RentalController{
 		if(!logincheck(request)) 
 			return "redirect:/login?toURL="+request.getRequestURL();
 		
-		//dto에서 장소 이름들 받아오는 controller
+		//dto에서 장소 이름들 받아오는 부분
 		try {
-			List<RentalDto> placelist = rentalDao.selectRentalPlace();
+			List<RentalDto> placelist = rentalService.selectRentalPlace();
 			m.addAttribute("placelist", placelist);
 			
 		}catch(Exception e) {
@@ -55,6 +59,25 @@ public class RentalController{
 		}
 		return "rental/place";
 	}
+	
+	@GetMapping("/rental/place/{prental_id}")
+	@ResponseBody
+	public ResponseEntity<List<RentalDto>> list(Integer prental_id) {
+		List<RentalDto> list = null;
+		
+		try {
+			list = rentalService.getList(prental_id);
+			
+			System.out.println("list : " + list);
+			return new ResponseEntity<List<RentalDto>>(list, HttpStatus.OK);		//200
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<RentalDto>>(HttpStatus.BAD_REQUEST);	//400
+		}
+		
+	}
+	
 	
 	private boolean logincheck(HttpServletRequest request) {
 		// TODO Auto-generated method stub

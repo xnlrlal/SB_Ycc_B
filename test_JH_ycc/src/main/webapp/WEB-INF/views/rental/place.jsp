@@ -152,7 +152,7 @@ td {
 				<tr>
 					<td>${result.croom_name}</td>
 					<td>08:00 ~ 10:10</td>
-					<td><div name="rsdate"></div></td>
+					<td><div name="selecteddate"></div></td>
 					<td><input type="checkbox"></td>
 				</tr>
 				<tr>
@@ -185,6 +185,9 @@ td {
 					<td><div name="rsdate"></div></td>
 					<td><input type="checkbox"></td>
 				</tr>
+				<c:forEach value="selected" items= "${selectedvalue }">
+				
+				</c:forEach>
 			</tbody>
 		</table>
 		<!-- Button trigger modal -->
@@ -244,7 +247,7 @@ td {
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	 <script type="text/javascript">
 	$(document).ready(function() { 
 	
 	$("#viewBtn").click(function() {
@@ -252,8 +255,59 @@ td {
 		
 		let place = $("select[name=selectplace]").val()
 		alert(place)
-		let rentalselectdate = $("input[name=rday]").val()
-		alert(rentalselectdate)
+		let selecteddate = $("input[name=rday]").val()
+		alert(selecteddate)
+		//작동확인
+		
+		$.ajax({
+			type: 'GET',
+			url: '/ycc/rental/place/{prental_id}' + prental_id,
+			headers: {"content-type" : "application/json"},
+			data: JSON.stringify({prental_id:prental_id, place:place, selecteddate:selecteddate}),
+			seccess: function(result){
+				alert(result)
+
+			},
+			error: function() {alert("rental error")}
+		})
+		
+		let showList = function(prental_id) {
+			$.ajax({
+				type: 'GET',
+				url: '/ycc/rental?prental_id='+prental_id,
+				success: function(result) {
+					$("#").html(toHtml(result))},
+					error: function() {alert("showList error")}
+				}
+			})
+		}
+	
+		let toHtml = function(rentalinfos) {
+			let tmp = "<table>"
+				tmp += "<thaed>"
+				tmp += "<tr>"
+				tmp += '<th scope="col" style="text-align: center;">대관 장소</th>'
+				tmp += '<th scope="col" style="text-align: center;">시간</th>'
+				tmp += '<th scope="col" style="text-align: center;">예약일</th>'
+				tmp += '<th scope="col" style="text-align: center;">예약</th>'
+				tmp += '</tr>'
+				tmp += '</thead>'
+				tmp += '<tbody>'
+				
+			rentalinfos.foreach(function(info) {
+				tmp += '<tr rental-id=' +prental_id + '>'
+				tmp += '<td class="classroom"' + info.classroom + '>'
+				tmp += '<td class="rentaldate"' + 08:00 ~ 10:10 '>'
+				tmp += '<td class="selecteddate"' + info.selecteddate + '>'
+				tmp += '<input type="checkbox" id="cbox" name="cbox">'
+				tmp += '</tr>'
+			})
+			tmp += "</tbody>"
+			
+			return let tmp += </table>
+		}
+		
+		showList(prental_id)
 		//showList(bno)
 		/* let cno = $(this).attr("data-cno")
 		let comment = $("input[name=comment]").val();
@@ -313,7 +367,7 @@ td {
 		}
     
 	})
-  </script>
+  </script> 
 
 	<!-- footer inlcude -->
 	<%@include file="/WEB-INF/views/footer.jsp"%>

@@ -14,9 +14,23 @@ public class RentalDaoImpl implements RentalDao{
 	private static String namespace = "com.youngtvjobs.ycc.rental.rentalMapper.";
 
 	@Override
-	public List<RentalDto> selectRentalPlace() throws Exception {
-		
+	public List<RentalDto> select() throws Exception {
 		return session.selectList(namespace + "selectRentalPlace");
 	}
+
+	@Override
+	public List<RentalDto> selectview() throws Exception {
+		return session.selectList(namespace + "viewRentalPlace");
+	}
+
+	@Override
+	public List<RentalDto> selectAll() throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + "selectAll");
+	}
+	
+	
+
+	
 
 }
