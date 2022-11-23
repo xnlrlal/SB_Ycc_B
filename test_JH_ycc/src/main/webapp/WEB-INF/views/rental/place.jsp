@@ -82,7 +82,7 @@ td {
 				<p>
 				<h5>대관 장소 선택</h5>
 
-				<select id="selectplace" name="selectplace" onchange="changeValue(this)">
+				<select id="selectplace" name="selectplace">
 					<option value="">장소 선택</option>
 					<optgroup label="외부">
 						<!-- 외부 location code = 0 -->
@@ -120,8 +120,7 @@ td {
 				<p>
 					<label for="datetime-local">
 						<h5>대여 일자 지정</h5>
-					</label> <input type="date" id="datetime-local" name="rday"
-						onchange="printDate(), setMinValue()">
+					</label> <input type="date" id="datetime-local" name="rday">
 
 				</p>
 				<button id="viewBtn">조회하기</button>
@@ -150,19 +149,19 @@ td {
 			</thead>
 			<tbody>
 				<tr>
-					<td>${result.croom_name}</td>
+					<td>${rentalDto.croom_name }</td>
 					<td>08:00 ~ 10:10</td>
-					<td><div name="selecteddate"></div></td>
+					<td><div name="selecteddate"></div>${rentalDto.prental_de() }</td>
 					<td><input type="checkbox"></td>
 				</tr>
 				<tr>
-					<td>${result.croom_name}</td>
+					<td></td>
 					<td>10:20 ~ 12:10</td>
 					<td><div name="rsdate"></div></td>
 					<td><input type="checkbox"></td>
 				</tr>
 				<tr>
-					<td>${result.croom_name}</td>
+					<td></td>
 					<td>12:20 ~ 14:10</td>
 					<td><div name="rsdate"></div></td>
 					<td><input type="checkbox"></td>
@@ -185,11 +184,10 @@ td {
 					<td><div name="rsdate"></div></td>
 					<td><input type="checkbox"></td>
 				</tr>
-				<c:forEach value="selected" items= "${selectedvalue }">
 				
-				</c:forEach>
 			</tbody>
 		</table>
+		<div id="rentaltable"></div>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary " data-bs-toggle="modal"
 			data-bs-target="#exampleModal">신청하기</button>
@@ -216,23 +214,24 @@ td {
 							</tr>
 							<tr>
 								<th>이름</th>
-								<td colspan="3">김지호</td>
+								<td colspan="3">${sessionScope.id }</td>
 							</tr>
 							<tr>
 								<th>시설명</th>
-								<td colspan="3">강당</td>
+								<td colspan="3"><!-- 대관 페이지에서 선택한 장소 -->${rentalDto.croom_name }</td>
 							</tr>
 							<tr>
 								<th>예약 날짜</th>
 								<td colspan="3" onchange="printDate()">
-									<div id="rsdate"></div>
+								<!-- 대관 페이지에서 선택한 날짜 -->${rentalDto.prental_de() }	
 								</td>
 							</tr>
 							<tr>
-								<th>예약 시간</th>
+								<th>예약 시간</th><!-- = prental_time_info -->
 								<td colspan="3" onchange="">
 									<!-- onchange 안에 새로운 함수 넣을 것 -->
-									<div name="rtime"></div>
+									<!-- 대관 테이블(하단)에서 체크박스로 체크한 시간들(1,2,...) -->
+									${rentalDto.prental_duration }
 								</td>
 							</tr>
 						</table>
@@ -241,7 +240,7 @@ td {
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">확인</button>
+					<button type="button" class="btn btn-primary">확인</button><!-- 확인 버튼 누를 시 모달에서 보여준 값들 DB로 넘어감 -->
 				</div>
 			</div>
 		</div>
@@ -249,94 +248,92 @@ td {
 
 	 <script type="text/javascript">
 	$(document).ready(function() { 
+		
+		
+		let prental_id = 1
 	
 	$("#viewBtn").click(function() {
 		alert("조회하기 버튼")
 		
-		let place = $("select[name=selectplace]").val()
-		alert(place)
-		let selecteddate = $("input[name=rday]").val()
-		alert(selecteddate)
+		let croom_id = $("select[name=selectplace]").val()
+		alert(croom_id)
+		let prental_de = $("input[name=rday]").val()
+		alert(prental_de)
 		//작동확인
 		
 		$.ajax({
-			type: 'GET',
-			url: '/ycc/rental/place/{prental_id}' + prental_id,
+			type: 'POST',
+			url: '/ycc/rental/place?croom_id=' + croom_id , //수정요망
 			headers: {"content-type" : "application/json"},
-			data: JSON.stringify({prental_id:prental_id, place:place, selecteddate:selecteddate}),
-			seccess: function(result){
+			data: JSON.stringify({prental_id:prental_id, croom_id:croom_id, prental_de:prental_de}),
+			success: function(result){
+				//alert("값 전송하기 테스트")
 				alert(result)
-
+				$("#rentaltable").html(toHtml(result))//'22.11.22 여기까지 되는 거 확인, db에서 값까지 가져오는데 가져오는 값이 이상함
+				//alert("뭘봐")
+				
 			},
 			error: function() {alert("rental error")}
 		})
 		
-		let showList = function(prental_id) {
+	})
+		
+		/* let showList = function(prental_id) {
+			let croom_id = $("select[name=selectplace]").val()
+			let prental_de = $("input[name=rday]").val()
+			
 			$.ajax({
 				type: 'GET',
-				url: '/ycc/rental?prental_id='+prental_id,
+				url: '/ycc/rental/place?croom_id='+croom_id,
 				success: function(result) {
-					$("#").html(toHtml(result))},
+					$("#reltaltable").html(toHtml(result))},
 					error: function() {alert("showList error")}
-				}
-			})
-		}
+				})
+			}
+		 */
 	
 		let toHtml = function(rentalinfos) {
-			let tmp = "<table>"
-				tmp += "<thaed>"
+
+			let tmp = "<table style='text-align: center;'>"
+				tmp += "<thead>"
 				tmp += "<tr>"
-				tmp += '<th scope="col" style="text-align: center;">대관 장소</th>'
-				tmp += '<th scope="col" style="text-align: center;">시간</th>'
-				tmp += '<th scope="col" style="text-align: center;">예약일</th>'
-				tmp += '<th scope="col" style="text-align: center;">예약</th>'
+				tmp += '<th scope="col">대관 장소</th>'
+				tmp += '<th scope="col">시간</th>'
+				tmp += '<th scope="col">예약일</th>'
+				tmp += '<th scope="col">예약</th>'
 				tmp += '</tr>'
 				tmp += '</thead>'
 				tmp += '<tbody>'
+					
+			rentalinfos.forEach(function(info) {
+				//여기서는 뜸
+				/* alert("croom_id type : " + typeof info.croom_id) //뜸-string
+				alert("croom_name type : " + typeof info.croom_name) //뜸-string
+				alert("prental_de type : " + typeof info.prental_de) //뜸-number */
 				
-			rentalinfos.foreach(function(info) {
-				tmp += '<tr rental-id=' +prental_id + '>'
-				tmp += '<td class="classroom"' + info.classroom + '>'
-				tmp += '<td class="rentaldate"' + 08:00 ~ 10:10 '>'
-				tmp += '<td class="selecteddate"' + info.selecteddate + '>'
-				tmp += '<input type="checkbox" id="cbox" name="cbox">'
+				tmp += '<tr>'
+				tmp += '<td class="classroom"' + info.croom_id + '>' + ${info.croom_id} + '/td>'
+				tmp += '<td class="rentaldate">' + ${result.croom_name} + '</td>'
+				tmp += '<td class="selecteddate">' + ${info.prental_de} + '/td>'
+				tmp += '<td><input type="checkbox" id="cbox" name="cbox"></td>'
 				tmp += '</tr>'
 			})
 			tmp += "</tbody>"
 			
-			return let tmp += </table>
+			return tmp += '</table>'
+				
+			
 		}
 		
-		showList(prental_id)
-		//showList(bno)
-		/* let cno = $(this).attr("data-cno")
-		let comment = $("input[name=comment]").val();
+		//showList(prental_id)
 		
-		if(comment.trim() == '') {
-			alert("댓글을 입력하세요.")
-			$("input[name=comment]").focus()
-			return 
-		}
 		
-		$.ajax({
-			type: 'PATCH', 			// 요청 메서드 
-			url: '/heart/comments/'+cno, 	// 요청 URL
-			headers : { "content-type" : "application/json"}, 	//요청 헤더에 내용 포함
-			data : JSON.stringify({cno:cno, comment:comment}),		//서버로 전송할 데이터. stringify()로 직렬화 필요
-			success : function(result){			//서버로부터 응답이 도착하면 호출퇼 함수
-				alert(result)
-				showList(bno)
-			},
-			error : function() {alert("post error")}		//에러발생 시, 호출될 함수
-			 
-		})*/
-	})
 	
 	//현재 시간보다 이전의 시간은 선택할 수 없는 기능
-    let dateElement = document.getElementById('datetime-local');	//datetime-local의 값 가져옴
+    /* let dateElement = document.getElementById('datetime-local');	//datetime-local의 값 가져옴
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
     dateElement.value = date;	//현재 날짜로 date 설정
-    dateElement.setAttribute("min", date);
+    dateElement.setAttribute("min", date); */
 
     function setMinValue() {
       if (dateElement.value < date) {//선택한 날짜 < 현 날짜
@@ -366,7 +363,7 @@ td {
 		  document.querySelector(`div`).innerHTML = `text: ${text} value: ${value}`;
 		}
     
-	})
+	  })
   </script> 
 
 	<!-- footer inlcude -->
