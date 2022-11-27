@@ -1,5 +1,6 @@
 package com.youngtvjobs.ycc.rental;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,29 @@ public class RentalServiceImpl implements RentalService{
 		return rentalDao.selectview();
 	}
 
-	@Override//select에 DB에서 값 넣는 기능 
+	@Override//select에 DB에서 값 넣는 기능 , 작동확인
 	public List<RentalDto> selectRentalPlace() throws Exception {
 		return rentalDao.select();
 	}
 
-	@Override
-	public List<RentalDto> getList(Integer prental_id) throws Exception {
-		return rentalDao.selectAll();
+	@Override//select, calender에서 선택한 값을 기반으로 하단 테이블에 보여주는 기능
+	public List<RentalDto> getList(String croom_id, Date prental_de) throws Exception {
+		List<RentalDto> list = null;
+		list = rentalDao.selectAll(croom_id, prental_de);
+		System.out.println("list = " + list);
+		return list;
 	}
+
+	@Override
+	public int rental(RentalDto rentalDto) throws Exception {
+		return rentalDao.insertRentalinfo(rentalDto);
+	}
+
+	@Override
+	public List<RentalDto> checkRental() throws Exception {
+		return rentalDao.selectRental();
+	}
+	
 	
 }
 	

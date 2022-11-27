@@ -34,6 +34,7 @@ td {
 					처리)</li>
 			</ol>
 		</div>
+		<h1>{RentalDto.croom_id}</h1>
 
 		<div class="row mb-3">
 			<div class="col-12 col-md-6 " id="change">
@@ -124,7 +125,7 @@ td {
 
 				</p>
 				<button id="viewBtn">조회하기</button>
-
+				
 
 				<!--대관 장소 선택 끝-->
 			</div>
@@ -187,10 +188,36 @@ td {
 				
 			</tbody>
 		</table>
-		<div id="rentaltable"></div>
+		<div id="rentaltable">
+		<!-- 값ㄴ 나올 부분 -->
+		</div>
+		<button id="Tstbutton">테스트 버튼</button>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary " data-bs-toggle="modal"
 			data-bs-target="#exampleModal">신청하기</button>
+			<table>
+				<tr>
+					<th class="no">번호</th>
+					<th class="title">제목</th>
+					<th class="writer">이름</th>
+					<th class="regdate">등록일</th>
+					<th class="viewcnt">조회수</th>
+				</tr>
+				
+				<c:forEach var="rentalDto" items="${list }">
+					<tr>
+						<td class="no">${rentalDto.croom_id}</td>
+						<td class="title">
+							<!-- <a href="<c:url value="/board/read${pr.sc.queryString}&bno=${boardDto.bno }" />">  -->
+								${rentalDto.croom_name }
+							<!-- </a> -->
+						</td>
+						<td class="writer">${rentalDto.prental_time_info }</td>
+									<td class="regdate"><fmt:formatDate value="${rentalDto.prental_de }" pattern="yyyy-MM-dd" type="date"/></td>
+						<td class="viewcnt">${rentalDto.user_id }</td>
+					</tr>
+				</c:forEach>
+			</table>
 	</div>
 
 	<!-- Modal -->
@@ -213,15 +240,15 @@ td {
 									class="img-fluid">
 							</tr>
 							<tr>
-								<th>이름</th>
+								<th>이름</th><!-- user_id = sessionScope.id -->
 								<td colspan="3">${sessionScope.id }</td>
 							</tr>
 							<tr>
-								<th>시설명</th>
+								<th>시설명</th> <!-- =croom_name -->
 								<td colspan="3"><!-- 대관 페이지에서 선택한 장소 -->${rentalDto.croom_name }</td>
 							</tr>
 							<tr>
-								<th>예약 날짜</th>
+								<th>예약 날짜</th><!-- = prental_de -->
 								<td colspan="3" onchange="printDate()">
 								<!-- 대관 페이지에서 선택한 날짜 -->${rentalDto.prental_de() }	
 								</td>
@@ -250,31 +277,51 @@ td {
 	$(document).ready(function() { 
 		
 		
-		let prental_id = 1
+		//let prental_id = 1
 	
 	$("#viewBtn").click(function() {
 		alert("조회하기 버튼")
 		
-		let croom_id = $("select[name=selectplace]").val()
-		alert(croom_id)
-		let prental_de = $("input[name=rday]").val()
-		alert(prental_de)
+		let croom_id = encodeURIComponent($("select[name=selectplace]").val())
+		console.log(typeof((croom_id)))
+		let prental_de = encodeURIComponent($("input[name=rday]").val())
+		console.log(typeof((prental_de)))
+		console.log(prental_de)
+		
+		var params = "?croom_id=" + croom_id;
+		params += "&prental_de=" + prental_de;
 		//작동확인
+
 		
 		$.ajax({
-			type: 'POST',
-			url: '/ycc/rental/place?croom_id=' + croom_id , //수정요망
-			headers: {"content-type" : "application/json"},
-			data: JSON.stringify({prental_id:prental_id, croom_id:croom_id, prental_de:prental_de}),
+			type: 'GET',
+			url: 'ycc/rental/place.send',
+			data : {
+				croom_id : "101",
+				prental_de : "2022-11-28",
+			}
 			success: function(result){
-				//alert("값 전송하기 테스트")
-				alert(result)
+				console.log(result)
+				console.log(result.croom_name)
+				console.log(result.prental_de)
 				$("#rentaltable").html(toHtml(result))//'22.11.22 여기까지 되는 거 확인, db에서 값까지 가져오는데 가져오는 값이 이상함
-				//alert("뭘봐")
 				
 			},
 			error: function() {alert("rental error")}
 		})
+		
+		/* $.ajax({
+			type: 'GET',
+			url: 'ycc/rental/place/' + params,
+			success: function(result){
+				console.log(result)
+				console.log(result.croom_name)
+				console.log(result.prental_de)
+				$("#rentaltable").html(toHtml(result))//'22.11.22 여기까지 되는 거 확인, db에서 값까지 가져오는데 가져오는 값이 이상함
+				
+			},
+			error: function() {alert("rental error")}
+		}) */
 		
 	})
 		
@@ -304,17 +351,14 @@ td {
 				tmp += '</tr>'
 				tmp += '</thead>'
 				tmp += '<tbody>'
+				console.log(typeof(rentalinfos.croom_name))
 					
 			rentalinfos.forEach(function(info) {
-				//여기서는 뜸
-				/* alert("croom_id type : " + typeof info.croom_id) //뜸-string
-				alert("croom_name type : " + typeof info.croom_name) //뜸-string
-				alert("prental_de type : " + typeof info.prental_de) //뜸-number */
-				
+								 
 				tmp += '<tr>'
-				tmp += '<td class="classroom"' + info.croom_id + '>' + ${info.croom_id} + '/td>'
-				tmp += '<td class="rentaldate">' + ${result.croom_name} + '</td>'
-				tmp += '<td class="selecteddate">' + ${info.prental_de} + '/td>'
+				tmp += '<td class="classroom"' + info.croom_name + '>' + ${info.croom_name} + '/td>'
+				tmp += '<td class="rentaltime">' + ${info.prental_de} + '</td>'
+				tmp += '<td class="selecteddate">' + ${info.prental_time_info} + '/td>'
 				tmp += '<td><input type="checkbox" id="cbox" name="cbox"></td>'
 				tmp += '</tr>'
 			})
@@ -326,6 +370,35 @@ td {
 		}
 		
 		//showList(prental_id)
+		//체크박스가 체크되어 있는지 확인하는 기능
+		/* $("#Tstbutton").click(function(){
+			$("input[type=checkbox]:checked").each(function(){
+				value = $(this).val()
+				alert(value)
+			})
+		}) */
+		
+		/* //체크된 부분의 값 가져오는 기능
+		$("#Tstbutton").click(function(){
+			const arr = []
+			var cbox = $("input[name='cbox']:checked")
+			$(cbox).each(function(){
+				arr.push($(this).val())
+				alert(arr[])
+				
+			})
+		}) */
+		
+		$("#Tstbutton").click(function(){
+			$('input:checkbox[name=cbox]').each(function (index) {
+				if($(this).is(":checked")==true){
+	    		alert($(this).val())
+	    		}
+			})
+		})
+		
+		
+		
 		
 		
 	
@@ -356,15 +429,19 @@ td {
       }
     
   //select 에서 값 가져오기 //미적용
-	  const showValue = (target) => {
+	 /*  const showValue = (target) => {
 		  const value = target.value;
 		  const text =  target.options[target.selectedIndex].text;
 		  
 		  document.querySelector(`div`).innerHTML = `text: ${text} value: ${value}`;
 		}
     
+	  }) */
+  
+	  	let msg = "${msg}"
+	  	if(msg == "REN_OK") alert("예약신청을 완료했습니다.")
 	  })
-  </script> 
+  </script>
 
 	<!-- footer inlcude -->
 	<%@include file="/WEB-INF/views/footer.jsp"%>
