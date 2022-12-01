@@ -7,7 +7,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class RentalDto {
 
-	private int prental_id; // 대여예약번호(pk)
+	private Integer prental_id; // 대여예약번호(pk)
 	private Date prental_de; // 대여날짜
 	private int prental_time_info;// 대여시간
 	private String user_id; // 회원아이디 (fk)
@@ -32,7 +32,7 @@ public class RentalDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RentalDto(int prental_id, Date prental_de, int prental_time_info, String user_id, String croom_id,
+	public RentalDto(Integer prental_id, Date prental_de, int prental_time_info, String user_id, String croom_id,
 			String croom_location, int croom_mpop, String croom_name, String locker_id, String locker_location,
 			Date locker_start_date, int locker_cost, Date locker_end_date, int sroom_seat_id, Date sroom_entry_time,
 			Date sroom_checkout_time) {
@@ -88,11 +88,11 @@ public class RentalDto {
 		this.prental_de = prental_de;
 	}
 
-	public int getprental_time_info() {
+	public Integer getprental_time_info() {
 		return prental_time_info;
 	}
 
-	public void setprental_time_info(int prental_time_info) {
+	public void setprental_time_info(Integer prental_time_info) {
 		this.prental_time_info = prental_time_info;
 	}
 
